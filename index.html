@@ -358,6 +358,23 @@ footer a{color:var(--accent)}
   footer{font-size:11.5px}
   .recpop{right:-4px}
 }
+
+/* ---- last 10 games ---- */
+.l10{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:6px}
+.l10head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.l10sum{font-size:12.5px;color:var(--muted)}.l10sum b{color:var(--ink)}
+.l10chart{margin-right:34px;position:relative;overflow:visible;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;align-items:end;border-bottom:1px solid var(--line);margin-top:18px}
+.l10col{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.l10col i{display:block;width:100%;max-width:34px;border-radius:5px 5px 0 0;background:#6d5a9c}
+.l10col i.over{background:var(--accent)}.l10col i.push{background:var(--muted)}
+.l10v{position:absolute;left:0;right:0;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink)}
+.l10line{position:absolute;left:0;right:0;border-top:1.5px dashed rgba(244,238,255,.55);pointer-events:none}
+.l10line span{position:absolute;right:-2px;top:-9px;transform:translateX(100%);font-family:var(--mono);font-size:11px;color:var(--ink);background:var(--panel);padding:0 4px}
+.l10axis{margin-right:34px;margin-top:4px;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;text-align:center;font-size:11px;color:var(--muted);font-family:var(--mono)}
+.l10axis span{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.l10axis small{font-size:9.5px;opacity:.75}
+.l10note{margin:2px 0 0;font-size:11.5px;color:var(--muted)}
+@media(max-width:700px){.l10chart,.l10axis{gap:3px}.l10v{font-size:10px}.l10axis{font-size:9.5px}.l10axis small{display:none}}
 </style>
 </head>
 <body>
@@ -408,6 +425,7 @@ footer a{color:var(--accent)}
       <label>Team<input id="p_team" type="text" maxlength="4" readonly tabindex="-1"></label>
       <label>Opponent<input id="p_opp" type="text" maxlength="4" readonly tabindex="-1"></label>
     </div>
+    <div id="l10" class="l10" hidden></div>
     <div id="outList"></div>
   </fieldset>
   <div class="engine-inputs" hidden>
@@ -691,7 +709,7 @@ function render(){
   $('exampleNote').style.display=isExample?'':'none';
   var r=evaluate(inp);last={inp:inp,r:r};
   var out=$('out');
-  if(r.error){out.innerHTML='<h2>Result</h2><p class="msg">'+esc(r.error)+'</p>';renderOut();renderAll();renderCtx();return}
+  if(r.error){out.innerHTML='<h2>Result</h2><p class="msg">'+esc(r.error)+'</p>';renderOut();renderAll();renderCtx();renderL10();return}
   var h='<h2>Result'+(inp.p_name?' · '+esc(inp.p_name)+' '+esc(r.stat.name):'')+'</h2>';
   if(r.best){
     var b=r.best,lab={play:'PLAY',lean:'LEAN',pass:'PASS'}[r.verdict];
@@ -728,7 +746,7 @@ function render(){
   }
   if(r.notes.length)h+='<ul class="notes">'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>'}).join('')+'</ul>';
   out.innerHTML=h;
-  renderOut();renderAll();renderCtx();
+  renderOut();renderAll();renderCtx();renderL10();
 }
 
 /* ---------- tracked card ---------- */
@@ -1063,6 +1081,27 @@ function boostFor(p,st,set){
   set=set||outSet;var f=boostBase(p,st,set),sb=splitBoost(p,st,set);
   if(!sb)return f;
   return Math.max(-20,Math.min(30,Math.round(sb.w*sb.pct+(1-sb.w)*f)));
+}
+
+/* ---------- last 10 games: display only, never feeds the projection ---------- */
+function renderL10(){
+  var box=document.getElementById('l10');if(!box)return;
+  var p=findPlayer($('p_name').value),st=$('p_stat').value;
+  if(!p||!SPLIT||!STATS[st]){box.hidden=true;return}
+  var lg=logFor(p);if(!lg){box.hidden=true;return}
+  var games=[];lg.me.forEach(function(g,i){if(g)games.push({v:gstat(g,st),min:g[0],d:lg.L.g[i][0],opp:lg.L.g[i][1],ha:lg.L.g[i][2]})});
+  games=games.slice(-10);if(!games.length){box.hidden=true;return}
+  var line=num($('bk0_line').value);var mx=(Math.max.apply(null,games.map(function(g){return g.v}).concat(line!=null?[line]:[]))||1)*1.15;
+  var hits=line!=null?games.filter(function(g){return g.v>line}).length:null;
+  var avg=games.reduce(function(a,g){return a+g.v},0)/games.length;
+  var H=120,lineY=line!=null?(1-line/mx)*H:null;
+  box.hidden=false;
+  box.innerHTML='<div class="l10head"><span class="bkh">Last '+games.length+' games · '+esc(STATS[st].name)+'</span><span class="l10sum">Avg '+avg.toFixed(1)+(hits!=null?' · <b>'+hits+' of '+games.length+'</b> over '+line:'')+'</span></div>'+
+    '<div class="l10chart" style="height:'+H+'px">'+(lineY!=null?'<div class="l10line" style="top:'+lineY.toFixed(1)+'px"><span>'+line+'</span></div>':'')+
+    games.map(function(g){var h=Math.max(3,g.v/mx*H),cls=line==null?'':(g.v>line?'over':g.v<line?'under':'push');
+      return '<div class="l10col" title="'+esc(g.d+' '+(g.ha==='@'?'@ ':'vs ')+g.opp+': '+g.v+' in '+g.min+' min')+'"><span class="l10v" style="bottom:'+(h+3).toFixed(1)+'px">'+g.v+'</span><i class="'+cls+'" style="height:'+h.toFixed(1)+'px"></i></div>'}).join('')+'</div>'+
+    '<div class="l10axis">'+games.map(function(g){return '<span>'+(g.ha==='@'?'@':'')+esc(g.opp)+'<small>'+esc(g.d.replace('-','/'))+'</small></span>'}).join('')+'</div>'+
+    '<p class="l10note">For reference only. The projection and edge don\'t use these games.</p>';
 }
 /* ---------- matchup context: teammates out, defense vs position (from this season's box scores) ---------- */
 var SPLIT=null;try{SPLIT=JSON.parse(document.getElementById('splitdata').textContent)}catch(e){SPLIT=null}
