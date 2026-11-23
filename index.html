@@ -385,7 +385,7 @@ footer a{color:var(--accent)}
   <div class="slatehead"><h2>Top 10 plays · NBA</h2><span id="lockCd"></span><span id="nbaTopSub"></span></div>
   <div class="picks" id="nbaTopCards"></div>
   <p class="swipehint">Swipe for all 10 →</p>
-  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They update whenever the board does.</p>
+  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They update until the NBA's game-day injury reports are in at 3:20 PM CT, then lock for the night.</p>
 </section>
 <div class="example" id="exampleNote"><b>Example loaded:</b> Desmond Bane points, ORL @ UTA, Nov. 11. His game log is real. The book prices, game total, spread, team scoring and matchup rank are placeholders. Replace them, or press <b>Clear</b>.</div>
 
@@ -862,7 +862,7 @@ var FB=null;
     players:r.players.split(';').map(function(x){var f=x.split('|');return {n:f[0],t:f[1],p:f[2],g:+f[3],m:+f[4],pts:+f[5],reb:+f[6],ast:+f[7],tpm:+f[8]}})};
   r.lines.games=cur.games.map(function(g){return {away:g.away,home:g.home,spread:g.spread,total:g.total,note:g.note}});
   FB={current:cur,lines:r.lines,h2h:{date:r.date,updated:'saved copy',h2h:r.h2h}};
-  FBTOP=r.top5?{date:r.date,picks:r.top5,locked:!!r.top5Locked}:null;LOCKAT=r.firstTip?Date.parse(r.firstTip):null;
+  FBTOP=r.top5?{date:r.date,picks:r.top5,locked:!!r.top5Locked}:null;LOCKAT=(r.lockAt||r.firstTip)?Date.parse(r.lockAt||r.firstTip):null;
   OB={};Object.keys(r.books||{}).forEach(function(b){var m=OB[b]={};Object.keys(r.books[b]).forEach(function(st){String(r.books[b][st]||'').split(';').forEach(function(row){var f=row.split('|');if(f.length<4||!(+f[1]>0))return;var k=norm(f[0]);(m[k]=m[k]||{})[st]={line:+f[1],hi:+f[2],lo:+f[3]}})})});
 }catch(e){FB=null}})();
 function slateSig(d,l,h){return [d&&d.date,d&&d.updated,l&&l.updated,h&&h.h2h&&h.h2h.length].join('|')}
@@ -898,7 +898,7 @@ var FBTOP=FBTOP||null;
   var b=$('recBtn'),pop=$('recPop'),v=$('recVal');if(!b)return;var n=R.w+R.l;
   v.textContent=R.w+'-'+R.l+(R.p?'-'+R.p:'')+(n?' · '+Math.round(100*R.w/n)+'%':'');
   var ST={pts:'Pts',reb:'Reb',ast:'Ast',tpm:'3PM',pra:'PRA',pr:'P+R',pa:'P+A',ra:'R+A'},MK={W:'✓',L:'✗',P:'Push',V:'Void'};
-  pop.innerHTML='<p class="rechead">Every Top 10 play is locked before the first tip and graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
+  pop.innerHTML='<p class="rechead">Every Top 10 play locks once the NBA\'s game-day injury reports are in (3:20 PM CT, or the first tip if earlier) and is graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
    (R.days.length?R.days.map(function(d){return '<div class="recday"><b>'+esc(d.label)+'</b><span>'+d.w+'-'+d.l+(d.p?'-'+d.p:'')+'</span></div><ul>'+d.picks.map(function(x){return '<li class="r'+(x.result||'')+'"><span>'+esc(x.n)+' '+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(ST[x.st]||x.st)+'</span><span>'+(x.result?(MK[x.result]||x.result)+(x.actual!=null?' ('+x.actual+')':''):'Pending')+'</span></li>'}).join('')+'</ul>'}).join(''):'<p class="rechead">No graded plays yet. Tonight\'s Top 10 is the first to count.</p>');
   pop.innerHTML+='<a class="reslink" href="results.html">See the full results →</a>';
   b.addEventListener('click',function(){var o=pop.hidden;pop.hidden=!o;b.setAttribute('aria-expanded',String(o))});

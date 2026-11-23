@@ -1,9 +1,11 @@
 name: Update slate
 on:
   schedule:
-    # Central time: 10:07 AM, 3:07 PM, 5:07 PM (cron is UTC; CST = UTC-6)
+    # Central time (cron is UTC; CST = UTC-6, CDT = UTC-5):
+    # 10:07 AM morning slate, 3:25 PM lock run after the injury reports, 5:07 PM late lines (picks stay locked)
     - cron: '7 16 * * *'
-    - cron: '7 21 * * *'
+    - cron: '25 20 * * *'
+    - cron: '25 21 * * *'
     - cron: '7 23 * * *'
   workflow_dispatch: {}
 permissions:

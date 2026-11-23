@@ -43,9 +43,16 @@ def main(box_path):
     hist=json.load(open(rp)) if os.path.exists(rp) else {}
     day=hist.get(today.isoformat())
     tip=odds.get('first_tip')
-    started=bool(tip) and dt.datetime.now(dt.timezone.utc)>=dt.datetime.fromisoformat(tip)
-    if top and not started and not (day and day.get('locked')):
-        hist[today.isoformat()]={'label':label,'picks':top,'locked':False,'first_tip':tip}
+    # Picks freeze once the NBA's game-day injury reports are in: teams must file between 11 a.m. and 1 p.m.
+    # local time, so the last (Pacific) reports land by about 3:15 p.m. Central. Earlier if a game tips before that.
+    lock=dt.datetime.combine(today,dt.time(15,20),ZoneInfo('America/Chicago'))
+    if tip: lock=min(lock,dt.datetime.fromisoformat(tip))
+    lock_iso=lock.astimezone(dt.timezone.utc).isoformat()
+    fb['lockAt']=lock_iso
+    started=dt.datetime.now(dt.timezone.utc)>=lock
+    if top and not (day and day.get('locked')):
+        if not day or not started: hist[today.isoformat()]={'label':label,'picks':top,'locked':started,'first_tip':tip,'lock_at':lock_iso}
+        else: day['locked']=True
     for k,v in hist.items():
         if not v.get('locked') and (k<today.isoformat() or (k==today.isoformat() and started)): v['locked']=True
     grade(hist,d)
