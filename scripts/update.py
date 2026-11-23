@@ -36,7 +36,7 @@ def main(box_path):
         s,n=re.subn(r'(<script id="%s" type="application/json">).*?(</script>)'%tag,lambda m:m.group(1)+blob+m.group(2),s,count=1,flags=re.S)
         assert n==1, tag
     open(p,'w',encoding='utf-8').write(s)
-    # ---- Top 5: compute with the page itself, lock before the first tip, grade past days ----
+    # ---- Top 10: compute with the page itself, lock before the first tip, grade past days ----
     top=json.loads(subprocess.run(['node',os.path.join(HERE,'top5.js'),p],capture_output=True,text=True,timeout=180).stdout or '[]')
     rp=os.path.join(ROOT,'data','picks.json')
     hist=json.load(open(rp)) if os.path.exists(rp) else {}
@@ -59,7 +59,7 @@ def main(box_path):
         assert n==1, tag
     open(p,'w',encoding='utf-8').write(s)
     json.dump(fb,open(os.path.join(ROOT,'data','slate.json'),'w',encoding='utf-8'),ensure_ascii=False)
-    print('OK', len(odds['games']),'games | Top 5:', ', '.join(f"{x['n']} {x['side']} {x['line']} {x['st']}" for x in fb['top5']), '| record', rec['w'],'-',rec['l'],'-',rec['p'])
+    print('OK', len(odds['games']),'games | Top 10:', ', '.join(f"{x['n']} {x['side']} {x['line']} {x['st']}" for x in fb['top5']), '| record', rec['w'],'-',rec['l'],'-',rec['p'])
 
 COLS={'pts':['points'],'reb':['rebounds'],'ast':['assists'],'tpm':['three_point_field_goals_made'],'pra':['points','rebounds','assists'],
       'pr':['points','rebounds'],'pa':['points','assists'],'ra':['rebounds','assists']}

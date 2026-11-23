@@ -305,7 +305,7 @@ button[data-add]{display:none!important}
   <div class="topright">
   <a class="discord" href="https://discord.gg/JGDGrSrNk" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg>Join the Discord for Premium</a>
   <div class="recwrap">
-    <button type="button" class="record" id="recBtn" aria-expanded="false" aria-controls="recPop"><span>Top 5 record</span><b id="recVal">0-0</b></button>
+    <button type="button" class="record" id="recBtn" aria-expanded="false" aria-controls="recPop"><span>Top 10 record</span><b id="recVal">0-0</b></button>
     <div class="recpop" id="recPop" hidden></div>
   </div>
   </div>
@@ -319,9 +319,9 @@ button[data-add]{display:none!important}
 </header>
 <div class="tabpane" id="tabNBA">
 <section class="panel top5" id="nbaTop5" hidden>
-  <div class="slatehead"><h2>Top 5 plays · NBA</h2><span id="nbaTopSub"></span></div>
+  <div class="slatehead"><h2>Top 10 plays · NBA</h2><span id="nbaTopSub"></span></div>
   <div class="picks" id="nbaTopCards"></div>
-  <p class="notes" style="padding:0">The five biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than two from a game. Tap a card to open the player. They update whenever the board does.</p>
+  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They update whenever the board does.</p>
 </section>
 <div class="example" id="exampleNote"><b>Example loaded:</b> Desmond Bane points, ORL @ UTA, Nov. 11. His game log is real. The book prices, game total, spread, team scoring and matchup rank are placeholders. Replace them, or press <b>Clear</b>.</div>
 
@@ -336,7 +336,7 @@ button[data-add]{display:none!important}
 <form class="panel" id="f" autocomplete="off">
   <fieldset><legend>Player and prop</legend>
     <div class="row">
-      <label>Player <small>Tap a player in the slate, the Top 5 or the board</small><input id="p_name" type="text" readonly tabindex="-1"></label><datalist id="playerList"></datalist>
+      <label>Player <small>Tap a player in the slate, the Top 10 or the board</small><input id="p_name" type="text" readonly tabindex="-1"></label><datalist id="playerList"></datalist>
       <label>Stat <small>Pick any prop for this player</small><select id="p_stat"></select></label>
     </div>
     <div class="filled" id="fillNote" hidden></div>
@@ -833,8 +833,8 @@ var FBTOP=FBTOP||null;
   var b=$('recBtn'),pop=$('recPop'),v=$('recVal');if(!b)return;var n=R.w+R.l;
   v.textContent=R.w+'-'+R.l+(R.p?'-'+R.p:'')+(n?' · '+Math.round(100*R.w/n)+'%':'');
   var ST={pts:'Pts',reb:'Reb',ast:'Ast',tpm:'3PM',pra:'PRA',pr:'P+R',pa:'P+A',ra:'R+A'},MK={W:'✓',L:'✗',P:'Push',V:'Void'};
-  pop.innerHTML='<p class="rechead">Every Top 5 play is locked before the first tip and graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
-   (R.days.length?R.days.map(function(d){return '<div class="recday"><b>'+esc(d.label)+'</b><span>'+d.w+'-'+d.l+(d.p?'-'+d.p:'')+'</span></div><ul>'+d.picks.map(function(x){return '<li class="r'+(x.result||'')+'"><span>'+esc(x.n)+' '+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(ST[x.st]||x.st)+'</span><span>'+(x.result?(MK[x.result]||x.result)+(x.actual!=null?' ('+x.actual+')':''):'Pending')+'</span></li>'}).join('')+'</ul>'}).join(''):'<p class="rechead">No graded plays yet. Tonight\'s Top 5 is the first to count.</p>');
+  pop.innerHTML='<p class="rechead">Every Top 10 play is locked before the first tip and graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
+   (R.days.length?R.days.map(function(d){return '<div class="recday"><b>'+esc(d.label)+'</b><span>'+d.w+'-'+d.l+(d.p?'-'+d.p:'')+'</span></div><ul>'+d.picks.map(function(x){return '<li class="r'+(x.result||'')+'"><span>'+esc(x.n)+' '+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(ST[x.st]||x.st)+'</span><span>'+(x.result?(MK[x.result]||x.result)+(x.actual!=null?' ('+x.actual+')':''):'Pending')+'</span></li>'}).join('')+'</ul>'}).join(''):'<p class="rechead">No graded plays yet. Tonight\'s Top 10 is the first to count.</p>');
   b.addEventListener('click',function(){var o=pop.hidden;pop.hidden=!o;b.setAttribute('aria-expanded',String(o))});
   document.addEventListener('click',function(e){if(!pop.hidden&&!e.target.closest('.recwrap')){pop.hidden=true;b.setAttribute('aria-expanded','false')}});
 })();
@@ -904,9 +904,9 @@ function renderNbaTop(){
   var fixed=!window.__forceTop5&&FBTOP&&slate&&FBTOP.date===slate.date&&FBTOP.picks&&FBTOP.picks.length?FBTOP.picks:null;
   if(fixed)fixed.forEach(function(r){var p=findPlayer(r.n);if(!p)return;var gi=-1;slate.games.forEach(function(g,i){if(g.home===p.t||g.away===p.t)gi=i});out.push({r:r,p:p,g:slate.games[gi]})});
   if(!fixed)(udRows||[]).forEach(function(r){
-    if(out.length>=5||!(r.edge>0)||r.mult<1.6||r.mult>2.1||seen[r.n])return;
+    if(out.length>=10||!(r.edge>0)||r.mult<1.6||r.mult>2.1||seen[r.n])return;
     var p=findPlayer(r.n);if(!p)return;var u=udFor(p,r.st);if(!u)return;var other=r.side==='OVER'?u.lo:u.hi;if(!(other>=1.5&&other<=2.3))return;
-    var gi=-1;slate.games.forEach(function(g,i){if(g.home===p.t||g.away===p.t)gi=i});if((pg[gi]||0)>=2)return;
+    var gi=-1;slate.games.forEach(function(g,i){if(g.home===p.t||g.away===p.t)gi=i});if((pg[gi]||0)>=3)return;
     seen[r.n]=1;pg[gi]=(pg[gi]||0)+1;out.push({r:r,p:p,g:slate.games[gi]});
   });
   window.__top5=out.map(function(x){var r=x.r;return {n:r.n,t:r.t,st:r.st,side:r.side,line:r.line,mult:+r.mult.toFixed(3),p:+r.p.toFixed(4),edge:+r.edge.toFixed(2),proj:+r.proj.toFixed(2),h:r.h||''}});
