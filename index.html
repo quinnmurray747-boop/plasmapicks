@@ -718,8 +718,8 @@ function applyPlayer(p){
 function renderSlate(msg){
   var st=$('slateStatus'),gm=$('slateGames'),qk=$('slateQuick');
   if(!slate||!slate.games||!slate.games.length||!slate.players){st.textContent=msg||'No slate is loaded. Enter the numbers by hand, or ask Claude to load today\'s games.';gm.innerHTML='';qk.innerHTML='';return}
-  var d=new Date(),today=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),stale=slate.date&&slate.date!==today;
-  st.textContent=(slate.label||slate.date)+'. Updated '+(slate.updated||'earlier')+'.'+(stale?' This slate is not for today. Ask Claude to refresh it.':'');
+  var d=new Date(),today=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),stale=slate.date&&slate.date<today,ahead=slate.date&&slate.date>today;
+  st.textContent=(slate.label||slate.date)+'. Updated '+(slate.updated||'earlier')+'.'+(stale?' This is an older slate; the next update will replace it.':ahead?' This is the next slate, posted early.':'');
   st.className=stale?'msg':'';
   if(slateGame>=slate.games.length)slateGame=0;
   gm.innerHTML=slate.games.map(function(g,i){
