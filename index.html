@@ -276,6 +276,10 @@ tr.best td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
 #f input[readonly],#f select:disabled{background:transparent;border-color:transparent;padding-left:0;color:var(--ink);font-family:var(--display);font-size:16px;letter-spacing:.5px;cursor:default;opacity:1;-webkit-appearance:none;appearance:none}
 #f input[readonly]:focus{box-shadow:none;outline:none}
 #f fieldset{border-top:0}
+
+/* ---- single centered column: player card above the result ---- */
+#tabNBA .grid{grid-template-columns:minmax(0,1fr);max-width:880px;width:100%;margin:0 auto}
+#tabNBA .grid>#f{gap:10px}
 </style>
 </head>
 <body>
