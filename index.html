@@ -284,6 +284,10 @@ tr.best td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
 /* ---- larger everything ---- */
 .wrap{zoom:1.18;max-width:1240px}
 #tabNBA .grid{max-width:900px}
+
+/* tracked card removed from view */
+#trackedCard{display:none!important}
+button[data-add]{display:none!important}
 </style>
 </head>
 <body>
@@ -390,7 +394,7 @@ tr.best td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
   <p class="notes" style="padding:0">Needs is the hit rate that breaks even at that payout (1 ÷ payout). The board only ranks regulars (24+ minutes, 5+ games). Chance is an even blend of the simulation and the book's own price. The simulation uses season averages, so a big gap can mean a recent role change it cannot see. Open loads the player so you can add teammates out or recent games before trusting it.</p>
 </section>
 
-<section class="panel">
+<section class="panel" id="trackedCard" hidden>
   <h2>Tracked card</h2>
   <div class="tiles" id="recTiles"></div>
   <div class="tw"><table id="cardTable"></table></div>
