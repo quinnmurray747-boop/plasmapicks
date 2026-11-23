@@ -6,7 +6,7 @@ sys.path.insert(0,HERE)
 import build_stats, fetch_odds
 
 def main(box_path):
-    now=dt.datetime.now(ZoneInfo('America/Chicago')); today=dt.date.fromisoformat(os.environ['SLATE_DATE']) if os.environ.get('SLATE_DATE') else now.date()
+    now=dt.datetime.now(ZoneInfo('America/Chicago')); today=dt.date.fromisoformat(os.environ['SLATE_DATE']) if os.environ.get('SLATE_DATE') else (now.date()+dt.timedelta(days=1) if now.hour>=21 else now.date())  # late at night, build tomorrow's slate
     d=build_stats.load(box_path)
     players=build_stats.players_str(d); teams=build_stats.teams_str(d,today); sp=build_stats.splits(d)
     known={p.split('|')[0] for p in players.split(';')}
