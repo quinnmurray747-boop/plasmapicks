@@ -23,6 +23,7 @@ def main(box_path):
         'teams':teams,'players':players,
         'lines':dict({'date':today.isoformat(),'updated':stamp,'source':'Odds feed','in':'','out':';'.join(odds['out']),'q':'','ts':int(time.time())},**odds['underdog']),
         'books':odds['books'],'h2h':''}
+    fb['firstTip']=odds.get('first_tip')
     yd=set(odds.get('yesterday',[]))
     teams=';'.join(t[:-1]+'1' if t.split('|')[0] in yd else t for t in teams.split(';')); fb['teams']=teams
     b2b={t.split('|')[0] for t in teams.split(';') if t.endswith('|1')}

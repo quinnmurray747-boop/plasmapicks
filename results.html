@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 10 results · PlasmaPicks</title>
+<meta name="description" content="Every PlasmaPicks Top 10 play, locked before tip-off and graded from the box score.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PlasmaPicks">
+<meta property="og:url" content="https://plasmapicks.com/results.html">
+<meta property="og:title" content="PlasmaPicks · Top 10 results">
+<meta property="og:description" content="Every Top 10 play, locked before tip-off and graded from the box score.">
+<meta property="og:image" content="https://plasmapicks.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e0720">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0720;--panel:#170d2e;--panel2:#20133d;--line:rgba(192,132,252,.16);--line2:rgba(192,132,252,.38);--ink:#f4eeff;--muted:#a898cc;--accent:#c084fc;--plum:#140a28;--good:#4ade80;--bad:#f87171;
+  --display:"Archivo Black","Inter",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px 64px;display:flex;flex-direction:column;gap:18px}
+@media(min-width:900px){.wrap{zoom:1.12}}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 -20px;padding:12px 20px;background:rgba(14,7,32,.92);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand img{width:32px;height:32px;border-radius:8px}
+.brand b{font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:2.5px}
+.nav{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--display);font-size:12.5px;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:999px;white-space:nowrap}
+.btn.pri{background:var(--accent);color:var(--plum)}
+.short{display:none}
+.btn.sec{border:1px solid var(--line2);color:var(--ink)}
+h1{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:1.5px;text-transform:uppercase;margin:10px 0 0}
+.lead{margin:0;color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--display);font-size:28px;margin-top:4px}
+.stat .s{font-size:12px;color:var(--muted)}
+.v.pos{color:var(--good)}.v.neg{color:var(--bad)}
+.chart svg{display:block;width:100%;height:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:#9c8cc6;text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid rgba(168,152,204,.08)}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+.day{margin-bottom:16px}
+.dayhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.dayhead b{font-size:14px}.dayhead span{font-family:var(--mono);color:var(--muted)}
+.res{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.rW{color:var(--good)}.rL{color:var(--bad)}.rP,.rV,.rpend{color:var(--muted)}
+.empty{color:var(--muted);margin:0}
+footer{color:var(--muted);font-size:12px}
+@media(max-width:700px){
+  .wrap{padding:0 12px 48px;gap:14px}.topbar{margin:0 -12px;padding:10px 12px}.brand b{display:none}
+  .btn{font-size:11px;padding:8px 11px}.long{display:none}.short{display:inline}
+  .stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}
+  .panel{padding:14px}h1{font-size:21px}
+  td,th{padding:7px 5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="topbar" aria-label="PlasmaPicks">
+  <a class="brand" href="./"><img src="logo.png" width="32" height="32" alt=""><b>PLASMA PICKS</b></a>
+  <div class="nav"><a class="btn sec" href="./">Picks</a><a class="btn pri" href="https://discord.gg/JGDGrSrNk" target="_blank" rel="noopener noreferrer"><span class="long">Join the Discord for Premium</span><span class="short">Premium Discord</span></a></div>
+</nav>
+<header>
+  <h1>Top 10 results</h1>
+  <p class="lead">Every Top 10 play is locked before the first tip and graded from the box score the next day. Pushes and players who sit out don't count toward the record.</p>
+</header>
+<section class="stats" id="stats"></section>
+<section class="panel chart"><h2>Units over time</h2><div id="chart"></div><p class="lead" style="font-size:12.5px;margin-top:8px">One unit on every play at the DraftKings price it was locked at.</p></section>
+<div class="two">
+  <section class="panel"><h2>By prop</h2><div id="byStat"></div></section>
+  <section class="panel"><h2>Higher vs Lower</h2><div id="bySide"></div></section>
+</div>
+<section class="panel"><h2>Every play</h2><div id="days"></div></section>
+<footer>Estimates, not guarantees. 21+. Gambling problem? Call 1-800-GAMBLER. <a href="./">Back to today's picks</a></footer>
+</div>
+<script>
+(function(){
+var ST={pts:'Points',reb:'Rebounds',ast:'Assists',tpm:'Threes',pra:'Pts + Reb + Ast',pr:'Pts + Reb',pa:'Pts + Ast',ra:'Reb + Ast'};
+var SH={pts:'Pts',reb:'Reb',ast:'Ast',tpm:'3PM',pra:'PRA',pr:'P+R',pa:'P+A',ra:'R+A'};
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function units(x){return x.result==='W'?(+x.mult||1.91)-1:x.result==='L'?-1:0}
+function fu(u){return (u>=0?'+':'−')+Math.abs(u).toFixed(2)}
+function tally(list){var w=0,l=0,p=0,u=0;list.forEach(function(x){if(x.result==='W')w++;else if(x.result==='L')l++;else if(x.result==='P')p++;u+=units(x)});return {w:w,l:l,p:p,u:u,n:w+l}}
+function pct(t){return t.n?Math.round(100*t.w/t.n)+'%':'–'}
+fetch('data/picks.json?'+Date.now()).then(function(r){return r.json()}).then(draw).catch(function(){draw({})});
+function draw(H){
+  var days=Object.keys(H).sort().map(function(k){var v=H[k];return {date:k,label:v.label||k,locked:!!v.locked,picks:v.picks||[]}});
+  var done=days.filter(function(d){return d.locked});
+  var all=[];done.forEach(function(d){d.picks.forEach(function(x){all.push(x)})});
+  var T=tally(all);
+  document.getElementById('stats').innerHTML=
+    stat('Record',T.w+'-'+T.l+(T.p?'-'+T.p:''),T.n?T.n+' graded plays':'Nothing graded yet','')+
+    stat('Win rate',pct(T),'52.4% breaks even at −110','')+
+    stat('Units',T.n?fu(T.u):'0.00','1 unit per play',T.u>0?'pos':T.u<0?'neg':'')+
+    stat('Days tracked',String(done.length),days.length>done.length?'Today pending':'','');
+  // chart: cumulative units by graded day
+  var pts=[{label:'Start',u:0}],c=0;done.forEach(function(d){var t=tally(d.picks);if(!t.n&&!t.p)return;c+=t.u;pts.push({label:d.label,u:c})});
+  var ch=document.getElementById('chart');
+  if(pts.length<2){ch.innerHTML='<p class="empty">The chart starts after the first night is graded.</p>'}
+  else{
+    var W=Math.round(Math.max(320,Math.min(900,ch.clientWidth||900))),Hh=W<600?220:260,L=44,R=16,Tp=20,B=34,lo=Math.min(0,Math.min.apply(null,pts.map(function(p){return p.u}))),hi=Math.max(0,Math.max.apply(null,pts.map(function(p){return p.u})));
+    if(hi-lo<2){hi+=1;lo-=1}
+    var X=function(i){return L+(pts.length===1?(W-L-R)/2:i*(W-L-R)/(pts.length-1))},Y=function(v){return Tp+(hi-v)*(Hh-Tp-B)/(hi-lo)};
+    var d=pts.map(function(p,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(p.u).toFixed(1)}).join(' ');
+    var step=Math.max(1,Math.ceil((hi-lo)/4)),ticks=[];for(var v=Math.ceil(lo/step)*step;v<=hi;v+=step)ticks.push(v);
+    var last=pts[pts.length-1],col=last.u>=0?'#4ade80':'#f87171';
+    ch.innerHTML='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Cumulative units: '+fu(last.u)+'">'+
+      ticks.map(function(v){return '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="'+(v===0?'rgba(244,238,255,.35)':'rgba(192,132,252,.14)')+'"/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#a898cc" font-family="JetBrains Mono,monospace">'+(v>0?'+':'')+v+'</text>'}).join('')+
+      '<path d="'+d+'" fill="none" stroke="#c084fc" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'+
+      pts.map(function(p,i){return '<circle cx="'+X(i)+'" cy="'+Y(p.u)+'" r="4" fill="#c084fc"><title>'+esc(p.label)+': '+fu(p.u)+'</title></circle>'}).join('')+
+      '<text x="'+X(pts.length-1)+'" y="'+(Y(last.u)-12)+'" text-anchor="'+(pts.length>1?'end':'middle')+'" font-size="14" font-weight="700" fill="'+col+'" font-family="JetBrains Mono,monospace">'+fu(last.u)+'</text>'+
+      '<text x="'+L+'" y="'+(Hh-10)+'" font-size="12" fill="#a898cc">'+esc(pts[0].label)+'</text>'+(pts.length>1?'<text x="'+(W-R)+'" y="'+(Hh-10)+'" text-anchor="end" font-size="12" fill="#a898cc">'+esc(last.label)+'</text>':'')+'</svg>'}
+  // splits
+  function split(key,names,order){var g={};all.forEach(function(x){(g[x[key]]=g[x[key]]||[]).push(x)});var ks=order.filter(function(k){return g[k]});
+    if(!ks.length)return '<p class="empty">Shows up after the first night is graded.</p>';
+    return '<table><thead><tr><th></th><th class="n">Record</th><th class="n">Win %</th><th class="n">Units</th></tr></thead><tbody>'+ks.map(function(k){var t=tally(g[k]);return '<tr><td>'+esc(names[k]||k)+'</td><td class="n">'+t.w+'-'+t.l+(t.p?'-'+t.p:'')+'</td><td class="n">'+pct(t)+'</td><td class="n" style="color:'+(t.u>0?'#4ade80':t.u<0?'#f87171':'inherit')+'">'+fu(t.u)+'</td></tr>'}).join('')+'</tbody></table>'}
+  document.getElementById('byStat').innerHTML=split('st',ST,['pts','reb','ast','tpm','pra','pr','pa','ra']);
+  document.getElementById('bySide').innerHTML=split('side',{OVER:'Higher',UNDER:'Lower'},['OVER','UNDER']);
+  // every play, newest first
+  var MK={W:'✓ Win',L:'✗ Loss',P:'Push',V:'Void'};
+  document.getElementById('days').innerHTML=days.length?days.slice().reverse().map(function(d){var t=tally(d.picks);
+    return '<div class="day"><div class="dayhead"><b>'+esc(d.label)+'</b><span>'+(d.locked?t.w+'-'+t.l+(t.p?'-'+t.p:''):'Pending')+'</span></div><table><tbody>'+
+      d.picks.map(function(x){var r=x.result||'pend';return '<tr><td>'+esc(x.n)+' <span style="color:var(--muted)">'+esc(x.t)+'</span></td><td>'+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(SH[x.st]||x.st)+'</td><td class="n res r'+r+'">'+(x.result?MK[x.result]+(x.actual!=null?' ('+x.actual+')':''):(d.locked?'Grading':'Pending'))+'</td></tr>'}).join('')+'</tbody></table></div>'}).join(''):'<p class="empty">No plays yet.</p>';
+}
+function stat(k,v,s,c){return '<div class="stat"><div class="k">'+k+'</div><div class="v '+c+'">'+esc(v)+'</div><div class="s">'+esc(s)+'</div></div>'}
+})();
+</script>
+</body>
+</html>
