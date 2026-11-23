@@ -852,7 +852,7 @@ function renderNbaTop(){
   if(!out.length){box.hidden=true;return}box.hidden=false;
   $('nbaTopSub').textContent=(slate.label||'')+'. '+BK()+' lines read '+(udMeta.updated||'')+'.';
   $('nbaTopCards').innerHTML=out.map(function(x,i){var r=x.r,g=x.g,opp=g?(g.home===x.p.t?'vs '+g.away:'@ '+g.home):'';
-    return '<button type="button" class="pick" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="rk">'+(i+1)+'</span><span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b><b class="up">'+sgn(r.edge)+' edge</b></span><span class="why">Avg '+(x.p[r.st]!=null?x.p[r.st]:'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
+    return '<button type="button" class="pick" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="rk">'+(i+1)+'</span><span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b><b class="up">'+sgn(r.edge)+' edge</b></span><span class="why">Avg '+(statAvg(x.p,r.st)!=null?(+statAvg(x.p,r.st)).toFixed(1):'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
 }
 $('nbaTop5').addEventListener('click',function(e){var t=e.target.closest('button');if(!t||!t.dataset.udp)return;var p=findPlayer(t.dataset.udp);if(!p)return;$('p_stat').value=t.dataset.uds;applyPlayer(p);$('f').scrollIntoView({block:'start'})});
 function renderBoard(){
