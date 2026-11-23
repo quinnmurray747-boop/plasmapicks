@@ -75,4 +75,5 @@ def slate(day, known_players):
     main={st:';'.join(v) for st,v in books[MAIN].items()}; main['book']=NAMES[MAIN]
     others={NAMES[b]:{st:';'.join(v) for st,v in books[b].items()} for b in OTHERS if books[b]}
     if unmatched: print('names not matched to stats (skipped):',', '.join(sorted(unmatched)))
-    return {'games':games,'underdog':main,'books':others,'out':[],'yesterday':sorted(yday)}
+    tips=[e['status']['startsAt'] for e in evs if not e['status'].get('cancelled')]
+    return {'first_tip':min(tips).replace('Z','+00:00') if tips else None,'games':games,'underdog':main,'books':others,'out':[],'yesterday':sorted(yday)}
