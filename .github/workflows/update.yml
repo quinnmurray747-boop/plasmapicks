@@ -1,8 +1,9 @@
 name: Update slate
 on:
   schedule:
-    # Central time (cron is UTC; CST = UTC-6, CDT = UTC-5):
-    # 10:07 AM morning slate, 3:25 PM lock run after the injury reports, 5:07 PM late lines (picks stay locked)
+    # Central time (cron is UTC; CST = UTC-6). 11:05 PM sets tomorrow's Top 10 for good;
+    # the daytime runs only refresh the board, lines and prices.
+    - cron: '5 5 * * *'
     - cron: '7 16 * * *'
     - cron: '25 20 * * *'
     - cron: '25 21 * * *'

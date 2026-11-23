@@ -385,7 +385,7 @@ footer a{color:var(--accent)}
   <div class="slatehead"><h2>Top 10 plays · NBA</h2><span id="lockCd"></span><span id="nbaTopSub"></span></div>
   <div class="picks" id="nbaTopCards"></div>
   <p class="swipehint">Swipe for all 10 →</p>
-  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They update until the NBA's game-day injury reports are in at 3:20 PM CT, then lock for the night.</p>
+  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They are set at 11 PM CT the night before and don't change. The board below keeps updating until tip-off.</p>
 </section>
 <div class="example" id="exampleNote"><b>Example loaded:</b> Desmond Bane points, ORL @ UTA, Nov. 11. His game log is real. The book prices, game total, spread, team scoring and matchup rank are placeholders. Replace them, or press <b>Clear</b>.</div>
 
@@ -898,7 +898,7 @@ var FBTOP=FBTOP||null;
   var b=$('recBtn'),pop=$('recPop'),v=$('recVal');if(!b)return;var n=R.w+R.l;
   v.textContent=R.w+'-'+R.l+(R.p?'-'+R.p:'')+(n?' · '+Math.round(100*R.w/n)+'%':'');
   var ST={pts:'Pts',reb:'Reb',ast:'Ast',tpm:'3PM',pra:'PRA',pr:'P+R',pa:'P+A',ra:'R+A'},MK={W:'✓',L:'✗',P:'Push',V:'Void'};
-  pop.innerHTML='<p class="rechead">Every Top 10 play locks once the NBA\'s game-day injury reports are in (3:20 PM CT, or the first tip if earlier) and is graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
+  pop.innerHTML='<p class="rechead">Every Top 10 play is set at 11 PM CT the night before and never changes after that. Each one is graded from the box score the next day. Pushes and players who sit out don\'t count.</p>'+
    (R.days.length?R.days.map(function(d){return '<div class="recday"><b>'+esc(d.label)+'</b><span>'+d.w+'-'+d.l+(d.p?'-'+d.p:'')+'</span></div><ul>'+d.picks.map(function(x){return '<li class="r'+(x.result||'')+'"><span>'+esc(x.n)+' '+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(ST[x.st]||x.st)+'</span><span>'+(x.result?(MK[x.result]||x.result)+(x.actual!=null?' ('+x.actual+')':''):'Pending')+'</span></li>'}).join('')+'</ul>'}).join(''):'<p class="rechead">No graded plays yet. Tonight\'s Top 10 is the first to count.</p>');
   pop.innerHTML+='<a class="reslink" href="results.html">See the full results →</a>';
   b.addEventListener('click',function(){var o=pop.hidden;pop.hidden=!o;b.setAttribute('aria-expanded',String(o))});
@@ -976,7 +976,7 @@ function bestPrice(p,r){var best=null,over=r.side==='OVER';
 /* lock countdown: picks freeze at the first tip */
 var LOCKAT=LOCKAT||null,lockTimer=null;
 function lockText(){if(!LOCKAT)return '';var ms=LOCKAT-Date.now();
-  if(ms<=0)return '<span class="lock done">Locked at '+new Date(LOCKAT).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'</span>';
+  if(ms<=0)return '<span class="lock done">Set '+new Date(LOCKAT).toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'})+'</span>';
   var h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4);return '<span class="lock">Picks lock in '+(h?h+'h ':'')+m+'m</span>'}
 function tickLock(){var el=document.getElementById('lockCd');if(el)el.innerHTML=lockText()}
 function renderNbaTop(){

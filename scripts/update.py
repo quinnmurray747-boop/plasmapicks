@@ -43,9 +43,8 @@ def main(box_path):
     hist=json.load(open(rp)) if os.path.exists(rp) else {}
     day=hist.get(today.isoformat())
     tip=odds.get('first_tip')
-    # Picks freeze once the NBA's game-day injury reports are in: teams must file between 11 a.m. and 1 p.m.
-    # local time, so the last (Pacific) reports land by about 3:15 p.m. Central. Earlier if a game tips before that.
-    lock=dt.datetime.combine(today,dt.time(15,20),ZoneInfo('America/Chicago'))
+    # The Top 10 is set in stone by the 11 PM CT run the night before. Later runs only refresh the board.
+    lock=dt.datetime.combine(today-dt.timedelta(days=1),dt.time(23,0),ZoneInfo('America/Chicago'))
     if tip: lock=min(lock,dt.datetime.fromisoformat(tip))
     lock_iso=lock.astimezone(dt.timezone.utc).isoformat()
     fb['lockAt']=lock_iso
