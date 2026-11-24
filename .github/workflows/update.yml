@@ -29,11 +29,11 @@ jobs:
       - name: Download hoopR box scores
         run: |
           git clone --depth 1 --filter=blob:none --no-checkout https://github.com/sportsdataverse/hoopr-nba-data /tmp/hoopr
-          cd /tmp/hoopr && git checkout HEAD -- nba/player_box/parquet/player_box_2027.parquet
+          cd /tmp/hoopr && git checkout HEAD -- nba/player_box/parquet/player_box_2027.parquet nba/player_box/parquet/player_box_2026.parquet nba/player_box/parquet/player_box_2025.parquet
       - name: Build slate
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python scripts/update.py /tmp/hoopr/nba/player_box/parquet/player_box_2027.parquet
+        run: python scripts/update.py /tmp/hoopr/nba/player_box/parquet/player_box_2027.parquet /tmp/hoopr/nba/player_box/parquet/player_box_2026.parquet /tmp/hoopr/nba/player_box/parquet/player_box_2025.parquet
       - name: Publish if changed
         run: |
           git config user.name "plasmapicks-bot"

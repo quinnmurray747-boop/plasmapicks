@@ -23,6 +23,10 @@ def main(box_path):
         'teams':teams,'players':players,
         'lines':dict({'date':today.isoformat(),'updated':stamp,'source':'Odds feed','in':'','out':';'.join(odds['out']),'q':'','ts':int(time.time())},**odds['underdog']),
         'books':odds['books'],'h2h':''}
+    try:   # history vs tonight's opponent, last 10 meetings across this season and the two before
+        prev=[build_stats.load(x) for x in sys.argv[2:] if os.path.exists(x)]
+        fb['h2h']=build_stats.h2h(build_stats.pd.concat([d]+prev,ignore_index=True),odds['games'])
+    except Exception as e: print('h2h skipped:',e)
     fb['firstTip']=odds.get('first_tip')
     yd=set(odds.get('yesterday',[]))
     teams=';'.join(t[:-1]+'1' if t.split('|')[0] in yd else t for t in teams.split(';')); fb['teams']=teams

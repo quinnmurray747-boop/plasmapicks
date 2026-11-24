@@ -61,3 +61,18 @@ if __name__=='__main__':
     print(len(ps.split(';')),'players |',ts[:300])
     for n in ['Tyrese Maxey','Scottie Barnes','Alperen Şengün','Kyle Kuzma']:
         print([x for x in ps.split(';') if x.startswith(n)])
+
+def h2h(hist, games):
+    """Each player's last 10 regular-season games against tonight's opponent (any team he played for).
+    hist: load() frames for this season and earlier ones, concatenated. Returns 'name|g|pts|reb|ast;...'"""
+    opp={}
+    for g in games: opp[g[0]]=g[1]; opp[g[1]]=g[0]
+    P=hist[hist.played].sort_values('date')
+    cur=P.groupby('name').tail(1).set_index('name')['tm']          # each player's current team
+    out=[]
+    for n,t in cur.items():
+        if t not in opp: continue
+        m=P[(P.name==n)&(P.op==opp[t])].tail(10)
+        if m.empty: out.append(f'{n}|0'); continue
+        out.append(f"{n}|{len(m)}|{m.points.mean():.1f}|{m.rebounds.mean():.1f}|{m.assists.mean():.1f}")
+    return ';'.join(out)
