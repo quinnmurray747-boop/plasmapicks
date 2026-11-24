@@ -142,49 +142,5 @@
   "locked": true,
   "first_tip": "2026-11-24T00:00:00.000+00:00",
   "lock_at": "2026-11-23T21:20:00+00:00"
- },
- "2026-11-24": {
-  "label": "Tuesday, Nov. 24",
-  "picks": [
-   {
-    "n": "Jalen Suggs",
-    "t": "ORL",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 11.5,
-    "mult": 1.781,
-    "p": 0.7072,
-    "edge": 14.57,
-    "proj": 7.33,
-    "h": ""
-   },
-   {
-    "n": "Cade Cunningham",
-    "t": "DET",
-    "st": "pr",
-    "side": "UNDER",
-    "line": 29.5,
-    "mult": 1.917,
-    "p": 0.6317,
-    "edge": 11,
-    "proj": 24.19,
-    "h": ""
-   },
-   {
-    "n": "Kevin Huerter",
-    "t": "DET",
-    "st": "pra",
-    "side": "UNDER",
-    "line": 18.5,
-    "mult": 1.877,
-    "p": 0.6265,
-    "edge": 9.37,
-    "proj": 15.03,
-    "h": ""
-   }
-  ],
-  "locked": true,
-  "first_tip": "2026-11-25T00:00:00.000+00:00",
-  "lock_at": "2026-11-24T05:00:00+00:00"
  }
 }
