@@ -12,7 +12,9 @@
     "p": 0.6783,
     "edge": 16.86,
     "proj": 13.76,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 17
    },
    {
     "n": "Miles Bridges",
@@ -66,7 +68,8 @@
     "p": 0.6325,
     "edge": 13,
     "proj": 12.06,
-    "h": ""
+    "h": "",
+    "result": "V"
    },
    {
     "n": "Scottie Barnes",
@@ -141,7 +144,8 @@
   ],
   "locked": true,
   "first_tip": "2026-11-24T00:00:00.000+00:00",
-  "lock_at": "2026-11-23T21:20:00+00:00"
+  "lock_at": "2026-11-23T21:20:00+00:00",
+  "graded": true
  },
  "2026-11-24": {
   "label": "Tuesday, Nov. 24",
