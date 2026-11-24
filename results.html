@@ -54,6 +54,7 @@ td.n,th.n{text-align:right;font-family:var(--mono)}
 .dayhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .dayhead b{font-size:14px}.dayhead span{font-family:var(--mono);color:var(--muted)}
 .res{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.rLive{color:var(--accent)}.livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f87171;margin-right:6px;vertical-align:1px;animation:lvp 1.4s ease-in-out infinite}@keyframes lvp{50%{opacity:.25}}
 .rW{color:var(--good)}.rL{color:var(--bad)}.rP,.rV,.rpend{color:var(--muted)}
 .empty{color:var(--muted);margin:0}
 footer{color:var(--muted);font-size:12px}
@@ -85,6 +86,7 @@ footer{color:var(--muted);font-size:12px}
 <section class="panel"><h2>Every play</h2><div id="days"></div></section>
 <footer>Estimates, not guarantees. 21+. Gambling problem? Call 1-800-GAMBLER. <a href="./">Back to today's picks</a></footer>
 </div>
+<script src="live.js?v=1"></script>
 <script>
 (function(){
 var ST={pts:'Points',reb:'Rebounds',ast:'Assists',tpm:'Threes',pra:'Pts + Reb + Ast',pr:'Pts + Reb',pa:'Pts + Ast',ra:'Reb + Ast'};
@@ -94,7 +96,9 @@ function units(x){return x.result==='W'?(+x.mult||1.91)-1:x.result==='L'?-1:0}
 function fu(u){return (u>=0?'+':'−')+Math.abs(u).toFixed(2)}
 function tally(list){var w=0,l=0,p=0,u=0;list.forEach(function(x){if(x.result==='W')w++;else if(x.result==='L')l++;else if(x.result==='P')p++;u+=units(x)});return {w:w,l:l,p:p,u:u,n:w+l}}
 function pct(t){return t.n?Math.round(100*t.w/t.n)+'%':'–'}
-fetch('data/picks.json?'+Date.now()).then(function(r){return r.json()}).then(draw).catch(function(){draw({})});
+fetch('data/picks.json?'+Date.now()).then(function(r){return r.json()}).then(function(H){draw(H);
+  if(window.PPLive)PPLive.watch(Object.keys(H).filter(function(k){return H[k].locked}).map(function(k){return {date:k,picks:H[k].picks||[]}}),function(){draw(H)});
+}).catch(function(){draw({})});
 function draw(H){
   var days=Object.keys(H).sort().map(function(k){var v=H[k];return {date:k,label:v.label||k,locked:!!v.locked,picks:v.picks||[]}});
   var done=days.filter(function(d){return d.locked});
@@ -132,7 +136,7 @@ function draw(H){
   var MK={W:'✓ Win',L:'✗ Loss',P:'Push',V:'Void'};
   document.getElementById('days').innerHTML=days.length?days.slice().reverse().map(function(d){var t=tally(d.picks);
     return '<div class="day"><div class="dayhead"><b>'+esc(d.label)+'</b><span>'+(d.locked?t.w+'-'+t.l+(t.p?'-'+t.p:''):'Pending')+'</span></div><table><tbody>'+
-      d.picks.map(function(x){var r=x.result||'pend';return '<tr><td>'+esc(x.n)+' <span style="color:var(--muted)">'+esc(x.t)+'</span></td><td>'+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(SH[x.st]||x.st)+'</td><td class="n res r'+r+'">'+(x.result?MK[x.result]+(x.actual!=null?' ('+x.actual+')':''):(d.locked?'Grading':'Pending'))+'</td></tr>'}).join('')+'</tbody></table></div>'}).join(''):'<p class="empty">No plays yet.</p>';
+      d.picks.map(function(x){var r=x.live?'Live':(x.result||'pend');return '<tr><td>'+esc(x.n)+' <span style="color:var(--muted)">'+esc(x.t)+'</span></td><td>'+(x.side==='OVER'?'Higher':'Lower')+' '+x.line+' '+(SH[x.st]||x.st)+'</td><td class="n res r'+r+'">'+(x.live?'<span class="livedot"></span>Live '+x.actual+' · '+esc(x.clock||''):x.result?MK[x.result]+(x.actual!=null&&x.result!=='V'?' ('+x.actual+')':''):(d.locked?'Grading':'Pending'))+'</td></tr>'}).join('')+'</tbody></table></div>'}).join(''):'<p class="empty">No plays yet.</p>';
 }
 function stat(k,v,s,c){return '<div class="stat"><div class="k">'+k+'</div><div class="v '+c+'">'+esc(v)+'</div><div class="s">'+esc(s)+'</div></div>'}
 })();
