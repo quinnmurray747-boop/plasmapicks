@@ -604,8 +604,9 @@ function project(inp){
   if(boost){boost=Math.max(-20,Math.min(30,boost));apply('Role boost','Teammates out, '+(boost>0?'+':'')+boost+'%',1+boost/100)}
   if(inp.b2b)apply('Back-to-back','Second night, −2%',.98);
   var hA=num(inp.h2hAvg),hG=num(inp.h2hGames);
-  if(hA!==null&&hG){var g=Math.min(6,hG),w=g/(g+15),nv=(1-w)*v+w*hA;
-    steps.push({label:'History vs opponent',detail:hA+' average in '+hG+' games, weighted '+Math.round(w*100)+'%',delta:nv-v,value:nv});v=nv}
+  /* supporting factor only: at most ~15% weight and never more than ±6% of the projection (matchup vs position can move it ±15%) */
+  if(hA!==null&&hG){var g=Math.min(6,hG),w=g/(g+34),nv=(1-w)*v+w*hA;nv=Math.max(v*.94,Math.min(v*1.06,nv));
+    steps.push({label:'History vs opponent',detail:hA+' average in '+hG+' games, weighted '+Math.round(w*100)+'%, capped at ±6%',delta:nv-v,value:nv});v=nv}
   if(n&&n<5)notes.push('Only '+n+' recent games. Treat the result as low confidence.');
   if(pm===null)notes.push('Projected minutes left blank, so they come from his averages. Check injury news before betting.');
   return {pre:v,minutes:mins,steps:steps,notes:notes,stat:st,spread:spread,total:total};
