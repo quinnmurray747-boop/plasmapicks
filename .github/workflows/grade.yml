@@ -8,7 +8,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: publish
+  group: grade
   cancel-in-progress: false
 jobs:
   grade:
@@ -24,4 +24,4 @@ jobs:
           git add index.html data/
           git diff --cached --quiet && exit 0
           git commit -m "Grade Top 10 $(date -u +%F\ %H:%M)"
-          git pull --rebase -q && git push
+          git pull --rebase -q && git push || echo 'push raced another update; the next run regrades'

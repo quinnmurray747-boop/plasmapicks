@@ -51,7 +51,7 @@ def main(box_path):
     started=dt.datetime.now(dt.timezone.utc)>=lock
     if top and not (day and day.get('locked')):
         if not day or not started: hist[today.isoformat()]={'label':label,'picks':top,'locked':started,'first_tip':tip,'lock_at':lock_iso}
-        else: day['locked']=True
+        else: hist[today.isoformat()]={'label':label,'picks':top,'locked':True,'first_tip':tip,'lock_at':lock_iso}   # lock with the latest numbers
     for k,v in hist.items():
         if not v.get('locked') and (k<today.isoformat() or (k==today.isoformat() and started)): v['locked']=True
     grade(hist,d)

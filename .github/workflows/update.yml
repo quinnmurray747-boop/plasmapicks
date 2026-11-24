@@ -3,7 +3,9 @@ on:
   schedule:
     # Central time (cron is UTC; CST = UTC-6). 11:05 PM sets tomorrow's Top 10 for good;
     # the daytime runs only refresh the board, lines and prices.
-    - cron: '5 5 * * *'
+    # GitHub often starts scheduled runs late or skips them, so the lock is attempted every 10 minutes
+    # through the 11 PM-1 AM CT window (the 4 UTC runs cover daylight time). Runs before 11 PM never lock.
+    - cron: '3,13,23,33,43,53 4,5,6 * * *'
     - cron: '7 16 * * *'
     - cron: '25 20 * * *'
     - cron: '25 21 * * *'
@@ -12,7 +14,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: publish
+  group: update
   cancel-in-progress: false
 jobs:
   update:
@@ -38,4 +40,4 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add index.html data/
           git diff --cached --quiet || git commit -m "Update slate $(date -u +%F\ %H:%M)"
-          git pull --rebase -q && git push
+          git pull --rebase -X theirs -q && git push
