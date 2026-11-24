@@ -184,7 +184,9 @@
     "p": 0.6181,
     "edge": 9.88,
     "proj": 28.95,
-    "h": "40.8 (5)"
+    "h": "40.8 (5)",
+    "result": "V",
+    "note": "Ruled out before tip"
    }
   ],
   "locked": true,

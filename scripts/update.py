@@ -17,11 +17,13 @@ def main(box_path):
         if g[3] is None or g[4] is None: problems.append(f'missing spread/total for {g[0]}@{g[1]}')
     if problems:
         print('NOT PUBLISHED:', '; '.join(problems)); sys.exit(1)
+    # players ruled out by hand (data/out.json: {"YYYY-MM-DD": ["Name", ...]}), since the free odds feed has no injury report
+    MANUAL_OUT=json.load(open(os.path.join(ROOT,'data','out.json'),encoding='utf-8')) if os.path.exists(os.path.join(ROOT,'data','out.json')) else {}
     stamp=now.strftime('%b. %-d, %-I:%M %p CT')
     label=dt.datetime.combine(today,dt.time()).strftime('%A, %b. %-d')
     fb={'date':today.isoformat(),'label':label,'updated':stamp,'games':odds['games'],
         'teams':teams,'players':players,
-        'lines':dict({'date':today.isoformat(),'updated':stamp,'source':'Odds feed','in':'','out':';'.join(odds['out']),'q':'','ts':int(time.time())},**odds['underdog']),
+        'lines':dict({'date':today.isoformat(),'updated':stamp,'source':'Odds feed','in':'','out':';'.join(odds['out']+MANUAL_OUT.get(today.isoformat(),[])),'q':'','ts':int(time.time())},**odds['underdog']),
         'books':odds['books'],'h2h':''}
     try:   # history vs tonight's opponent, last 10 meetings across this season and the two before
         prev=[build_stats.load(x) for x in sys.argv[2:] if os.path.exists(x)]
