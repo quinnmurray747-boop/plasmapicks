@@ -24,7 +24,9 @@
     "p": 0.6773,
     "edge": 16.5,
     "proj": 30.13,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 30
    },
    {
     "n": "Trey Murphy III",
@@ -132,7 +134,9 @@
     "p": 0.6456,
     "edge": 10.21,
     "proj": 23.33,
-    "h": ""
+    "h": "",
+    "result": "L",
+    "actual": 29
    }
   ],
   "locked": true,
