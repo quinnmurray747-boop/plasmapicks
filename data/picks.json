@@ -146,5 +146,121 @@
   "first_tip": "2026-11-24T00:00:00.000+00:00",
   "lock_at": "2026-11-23T21:20:00+00:00",
   "graded": true
+ },
+ "2026-11-24": {
+  "label": "Tuesday, Nov. 24",
+  "picks": [
+   {
+    "n": "Daniss Jenkins",
+    "t": "DET",
+    "st": "pra",
+    "side": "UNDER",
+    "line": 28.5,
+    "mult": 1.87,
+    "p": 0.696,
+    "edge": 16.12,
+    "proj": 20.84,
+    "h": "7.8 (4)"
+   },
+   {
+    "n": "Jalen Suggs",
+    "t": "ORL",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 11.5,
+    "mult": 1.82,
+    "p": 0.6823,
+    "edge": 13.28,
+    "proj": 7.94,
+    "h": "11.7 (7)"
+   },
+   {
+    "n": "Tristan Da Silva",
+    "t": "ORL",
+    "st": "pr",
+    "side": "OVER",
+    "line": 14.5,
+    "mult": 1.971,
+    "p": 0.6357,
+    "edge": 12.83,
+    "proj": 17.22,
+    "h": "14.2 (7)"
+   },
+   {
+    "n": "Naji Marshall",
+    "t": "DAL",
+    "st": "pts",
+    "side": "OVER",
+    "line": 10.5,
+    "mult": 1.99,
+    "p": 0.6072,
+    "edge": 10.47,
+    "proj": 12.09,
+    "h": "16.8 (8)"
+   },
+   {
+    "n": "Christian Braun",
+    "t": "DEN",
+    "st": "ra",
+    "side": "OVER",
+    "line": 7.5,
+    "mult": 2.05,
+    "p": 0.5806,
+    "edge": 9.28,
+    "proj": 7.53,
+    "h": "5.6 (5)"
+   },
+   {
+    "n": "Trae Young",
+    "t": "WAS",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 13.5,
+    "mult": 2,
+    "p": 0.5902,
+    "edge": 9.02,
+    "proj": 13.02,
+    "h": "13.7 (3)"
+   },
+   {
+    "n": "Nikola Jokić",
+    "t": "DEN",
+    "st": "reb",
+    "side": "UNDER",
+    "line": 11.5,
+    "mult": 2.04,
+    "p": 0.5595,
+    "edge": 6.93,
+    "proj": 11.76,
+    "h": "16.4 (7)"
+   },
+   {
+    "n": "Kyshawn George",
+    "t": "WAS",
+    "st": "ra",
+    "side": "UNDER",
+    "line": 8.5,
+    "mult": 1.826,
+    "p": 0.6121,
+    "edge": 6.44,
+    "proj": 7,
+    "h": "4.3 (4)"
+   },
+   {
+    "n": "Bilal Coulibaly",
+    "t": "WAS",
+    "st": "reb",
+    "side": "OVER",
+    "line": 3.5,
+    "mult": 1.962,
+    "p": 0.5518,
+    "edge": 4.21,
+    "proj": 4.52,
+    "h": "4.8 (5)"
+   }
+  ],
+  "locked": true,
+  "first_tip": "2026-11-25T00:00:00.000+00:00",
+  "lock_at": "2026-11-24T05:00:00+00:00"
  }
 }
