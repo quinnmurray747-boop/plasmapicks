@@ -142,5 +142,49 @@
   "locked": true,
   "first_tip": "2026-11-24T00:00:00.000+00:00",
   "lock_at": "2026-11-23T21:20:00+00:00"
+ },
+ "2026-11-24": {
+  "label": "Tuesday, Nov. 24",
+  "picks": [
+   {
+    "n": "Daniss Jenkins",
+    "t": "DET",
+    "st": "pa",
+    "side": "UNDER",
+    "line": 20.5,
+    "mult": 1.82,
+    "p": 0.687,
+    "edge": 13.76,
+    "proj": 15,
+    "h": "7.0 (4)"
+   },
+   {
+    "n": "Jalen Suggs",
+    "t": "ORL",
+    "st": "pa",
+    "side": "UNDER",
+    "line": 15.5,
+    "mult": 1.8,
+    "p": 0.6642,
+    "edge": 10.86,
+    "proj": 11.9,
+    "h": "15.8 (7)"
+   },
+   {
+    "n": "Paul Reed",
+    "t": "DET",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 16.5,
+    "mult": 1.98,
+    "p": 0.6028,
+    "edge": 9.78,
+    "proj": 13.75,
+    "h": "5.5 (6)"
+   }
+  ],
+  "locked": true,
+  "first_tip": "2026-11-25T00:00:00.000+00:00",
+  "lock_at": "2026-11-24T05:00:00+00:00"
  }
 }
