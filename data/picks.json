@@ -36,7 +36,9 @@
     "p": 0.6237,
     "edge": 14.29,
     "proj": 8.52,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 10
    },
    {
     "n": "Julius Randle",
@@ -48,7 +50,9 @@
     "p": 0.6542,
     "edge": 13.04,
     "proj": 24.71,
-    "h": ""
+    "h": "",
+    "result": "L",
+    "actual": 37
    },
    {
     "n": "De'Aaron Fox",
@@ -72,7 +76,9 @@
     "p": 0.6383,
     "edge": 12.15,
     "proj": 30.84,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 31
    },
    {
     "n": "LaMelo Ball",
@@ -84,7 +90,9 @@
     "p": 0.627,
     "edge": 11.02,
     "proj": 15.91,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 17
    },
    {
     "n": "Donovan Clingan",
@@ -96,7 +104,9 @@
     "p": 0.6068,
     "edge": 10.93,
     "proj": 9.88,
-    "h": ""
+    "h": "",
+    "result": "L",
+    "actual": 15
    },
    {
     "n": "VJ Edgecombe",
@@ -108,7 +118,9 @@
     "p": 0.6161,
     "edge": 10.88,
     "proj": 26.7,
-    "h": ""
+    "h": "",
+    "result": "W",
+    "actual": 26
    },
    {
     "n": "Zion Williamson",
