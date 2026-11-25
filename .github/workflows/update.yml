@@ -10,7 +10,10 @@ on:
     - cron: '25 20 * * *'
     - cron: '25 21 * * *'
     - cron: '7 23 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      repick_drop: {description: 'Locked plays to replace (names, ;-separated)', required: false, default: ''}
+      repick_skip: {description: 'Teams whose games have started', required: false, default: ''}
 permissions:
   contents: write
 concurrency:
@@ -33,6 +36,8 @@ jobs:
       - name: Build slate
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          REPICK_DROP: ${{ inputs.repick_drop }}
+          REPICK_SKIP: ${{ inputs.repick_skip }}
         run: python scripts/update.py /tmp/hoopr/nba/player_box/parquet/player_box_2027.parquet /tmp/hoopr/nba/player_box/parquet/player_box_2026.parquet /tmp/hoopr/nba/player_box/parquet/player_box_2025.parquet
       - name: Publish if changed
         run: |

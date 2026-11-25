@@ -60,6 +60,19 @@ def main(box_path):
     if top and not (day and day.get('locked')):
         if not day or not started: hist[today.isoformat()]={'label':label,'picks':top,'locked':started,'first_tip':tip,'lock_at':lock_iso}
         else: hist[today.isoformat()]={'label':label,'picks':top,'locked':True,'first_tip':tip,'lock_at':lock_iso}   # lock with the latest numbers
+    # injury re-pick: replace locked plays hurt by a late Out, using fresh numbers, only from games that haven't tipped
+    drop={x for x in os.environ.get('REPICK_DROP','').split(';') if x}; skip={x for x in os.environ.get('REPICK_SKIP','').split(';') if x}
+    if drop and day and day.get('locked'):
+        gi={}
+        for i,g in enumerate(odds['games']): gi[g[0]]=i; gi[g[1]]=i
+        keep=[x for x in day['picks'] if x['n'] not in drop]; per={}
+        for x in keep: per[gi.get(x['t'])]=per.get(gi.get(x['t']),0)+1
+        for x in top:
+            if len(keep)>=10: break
+            if x['t'] in skip or any(y['n']==x['n'] for y in keep) or per.get(gi.get(x['t']),0)>=3: continue
+            keep.append(dict(x,repick='Replaced after injury news')); per[gi.get(x['t'])]=per.get(gi.get(x['t']),0)+1
+        day['picks']=keep; day.setdefault('repicks',[]).append({'at':now.isoformat(timespec='minutes'),'dropped':sorted(drop)})
+        print('REPICK dropped',sorted(drop),'->',[x['n'] for x in keep])
     for k,v in hist.items():
         if not v.get('locked') and (k<today.isoformat() or (k==today.isoformat() and started)): v['locked']=True
     grade(hist,d)

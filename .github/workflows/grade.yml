@@ -1,12 +1,13 @@
 name: Grade live
 on:
   schedule:
-    # Every 10 minutes while games are on (cron is UTC: 00-07 UTC = 6 PM-2 AM CT; 18-23 UTC covers afternoon tips).
+    # Every 10-15 minutes on game days (UTC): grades live legs and watches the injury report from 9 AM CT on.
     - cron: '*/10 0-7 * * *'
-    - cron: '*/15 18-23 * * *'
+    - cron: '*/15 15-23 * * *'
   workflow_dispatch: {}
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: grade
   cancel-in-progress: false
@@ -17,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/grade_live.py
+      - id: inj
+        run: python3 scripts/injury_watch.py || echo 'injury watch failed'
       - name: Publish if changed
         run: |
           git config user.name "plasmapicks-bot"
@@ -25,3 +28,8 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Grade Top 10 $(date -u +%F\ %H:%M)"
           git pull --rebase -q && git push || echo 'push raced another update; the next run regrades'
+      - name: Re-pick plays hurt by injuries
+        if: steps.inj.outputs.drop != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update.yml --ref main -f repick_drop="${{ steps.inj.outputs.drop }}" -f repick_skip="${{ steps.inj.outputs.skip }}"
