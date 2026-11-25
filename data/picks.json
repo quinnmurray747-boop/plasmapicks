@@ -286,6 +286,140 @@
   "label": "Wednesday, Nov. 25",
   "picks": [
    {
+    "n": "LaMelo Ball",
+    "t": "MIN",
+    "st": "pa",
+    "side": "UNDER",
+    "line": 24.5,
+    "mult": 1.901,
+    "p": 0.7069,
+    "edge": 18.09,
+    "proj": 16.55,
+    "h": "18.0 (1)"
+   },
+   {
+    "n": "Yaxel Lendeborg",
+    "t": "GSW",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 21.5,
+    "mult": 1.8,
+    "p": 0.6923,
+    "edge": 13.67,
+    "proj": 15.64,
+    "h": "N/A"
+   },
+   {
+    "n": "Ajay Mitchell",
+    "t": "OKC",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 17.5,
+    "mult": 1.862,
+    "p": 0.6691,
+    "edge": 13.21,
+    "proj": 13.21,
+    "h": "10.2 (4)"
+   },
+   {
+    "n": "Egor Dëmin",
+    "t": "BKN",
+    "st": "pa",
+    "side": "OVER",
+    "line": 13.5,
+    "mult": 1.99,
+    "p": 0.6266,
+    "edge": 12.41,
+    "proj": 18.59,
+    "h": "20.0 (1)"
+   },
+   {
+    "n": "Landry Shamet",
+    "t": "NYK",
+    "st": "pts",
+    "side": "OVER",
+    "line": 13.5,
+    "mult": 1.962,
+    "p": 0.6334,
+    "edge": 12.37,
+    "proj": 16.47,
+    "h": "7.7 (7)"
+   },
+   {
+    "n": "Jarrett Allen",
+    "t": "CLE",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 21.5,
+    "mult": 1.901,
+    "p": 0.6444,
+    "edge": 11.84,
+    "proj": 17.11,
+    "h": "21.6 (8)"
+   },
+   {
+    "n": "Keegan Murray",
+    "t": "SAC",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 18.5,
+    "mult": 1.962,
+    "p": 0.6278,
+    "edge": 11.81,
+    "proj": 14.78,
+    "h": "14.8 (4)"
+   },
+   {
+    "n": "Julius Randle",
+    "t": "BKN",
+    "st": "pts",
+    "side": "OVER",
+    "line": 21.5,
+    "mult": 1.833,
+    "p": 0.6538,
+    "edge": 10.82,
+    "proj": 28.3,
+    "h": "16.7 (3)"
+   },
+   {
+    "n": "Toumani Camara",
+    "t": "POR",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 10.5,
+    "mult": 1.952,
+    "p": 0.6199,
+    "edge": 10.76,
+    "proj": 8.32,
+    "h": "10.9 (8)"
+   },
+   {
+    "n": "Naz Reid",
+    "t": "CHA",
+    "st": "pts",
+    "side": "OVER",
+    "line": 20.5,
+    "mult": 1.98,
+    "p": 0.6064,
+    "edge": 10.14,
+    "proj": 23.57,
+    "h": "19.8 (4)"
+   }
+  ],
+  "locked": true,
+  "first_tip": "2026-11-25T22:00:00.000+00:00",
+  "lock_at": "2026-11-25T05:00:00+00:00",
+  "repicks": [
+   {
+    "at": "2026-11-25T14:22-06:00",
+    "dropped": [
+     "Tyrese Maxey",
+     "VJ Edgecombe"
+    ]
+   }
+  ],
+  "overnight": [
+   {
     "n": "Isaiah Hartenstein",
     "t": "OKC",
     "st": "pts",
@@ -412,17 +546,7 @@
     "repick": "Replaced after injury news"
    }
   ],
-  "locked": true,
-  "first_tip": "2026-11-25T22:00:00.000+00:00",
-  "lock_at": "2026-11-25T05:00:00+00:00",
-  "repicks": [
-   {
-    "at": "2026-11-25T14:22-06:00",
-    "dropped": [
-     "Tyrese Maxey",
-     "VJ Edgecombe"
-    ]
-   }
-  ]
+  "final": true,
+  "final_at": "2026-11-25T16:07-06:00"
  }
 }
