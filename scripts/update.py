@@ -60,6 +60,28 @@ def main(box_path):
     if top and not (day and day.get('locked')):
         if not day or not started: hist[today.isoformat()]={'label':label,'picks':top,'locked':started,'first_tip':tip,'lock_at':lock_iso}
         else: hist[today.isoformat()]={'label':label,'picks':top,'locked':True,'first_tip':tip,'lock_at':lock_iso}   # lock with the latest numbers
+    # 4:00 PM CT final update: rebuild today's locked Top 10 once with the latest lines and injuries.
+    # Plays in games that have already tipped stay as they are. After this only an Out before tip changes a play.
+    day=hist.get(today.isoformat())
+    if day and day.get('locked') and not day.get('final') and today==now.date() and 16<=now.hour<21 and top:
+        try:
+            import requests
+            sb=requests.get('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates='+today.strftime('%Y%m%d'),timeout=20).json()
+            T={'NO':'NOP','SA':'SAS','UTAH':'UTA','GS':'GSW','NY':'NYK','WSH':'WAS'}; started=set()
+            for e in sb.get('events',[]):
+                if e['status']['type']['state']!='pre': started|={T.get(c['team']['abbreviation'],c['team']['abbreviation']) for c in e['competitions'][0]['competitors']}
+            gi={}
+            for i,g in enumerate(odds['games']): gi[g[0]]=i; gi[g[1]]=i
+            keep=[x for x in day['picks'] if x['t'] in started or x.get('result')]; per={}
+            for x in keep: per[gi.get(x['t'])]=per.get(gi.get(x['t']),0)+1
+            for x in top:
+                if len(keep)>=10: break
+                if x['t'] in started or any(y['n']==x['n'] for y in keep) or per.get(gi.get(x['t']),0)>=3: continue
+                keep.append(x); per[gi.get(x['t'])]=per.get(gi.get(x['t']),0)+1
+            day['overnight']=day.get('overnight') or day['picks']; day['picks']=keep
+            day['final']=True; day['final_at']=now.isoformat(timespec='minutes')
+            print('FINAL 4 PM Top 10:',[x['n'] for x in keep])
+        except Exception as e: print('final update failed, will retry:',e)
     # injury re-pick: replace locked plays hurt by a late Out, using fresh numbers, only from games that haven't tipped
     drop={x for x in os.environ.get('REPICK_DROP','').split(';') if x}; skip={x for x in os.environ.get('REPICK_SKIP','').split(';') if x}
     if drop and day and day.get('locked'):
@@ -78,7 +100,7 @@ def main(box_path):
     grade(hist,d)
     json.dump(hist,open(rp,'w',encoding='utf-8'),ensure_ascii=False,indent=1)
     cur=hist.get(today.isoformat())
-    fb['top5']=cur['picks'] if cur else top; fb['top5Locked']=bool(cur and cur.get('locked'))
+    fb['top5']=cur['picks'] if cur else top; fb['top5Locked']=bool(cur and cur.get('locked')); fb['top5Final']=bool(cur and cur.get('final'))
     rec=summary(hist)
     s=open(p,encoding='utf-8').read()
     for tag,obj in (('fbdata',fb),('recdata',rec)):

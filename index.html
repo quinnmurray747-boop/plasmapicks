@@ -412,7 +412,7 @@ footer a{color:var(--accent)}
   <div class="slatehead"><h2>Top 10 plays · NBA</h2><span id="lockCd"></span><span id="nbaTopSub"></span></div>
   <div class="picks" id="nbaTopCards"></div>
   <p class="swipehint">Swipe for all 10 →</p>
-  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They are set at 11 PM CT the night before and don't change. The board below keeps updating until tip-off.</p>
+  <p class="notes" style="padding:0">The ten biggest edges on <span class="bkname">Underdog</span> lines: one per player, no more than three from a game. Tap a card to open the player. They are set at 11 PM CT the night before and get one final update at 4:00 PM CT with the latest lines and injury news. After that, only a player ruled out before tip changes a play. The board below keeps updating until tip-off.</p>
 </section>
 <div class="example" id="exampleNote"><b>Example loaded:</b> Desmond Bane points, ORL @ UTA, Nov. 11. His game log is real. The book prices, game total, spread, team scoring and matchup rank are placeholders. Replace them, or press <b>Clear</b>.</div>
 
@@ -590,7 +590,9 @@ function project(inp){
   var rate=sAvg/sMin;
   if(n){rAvg=rec.reduce(function(a,b){return a+b},0)/n;wR=Math.min(.45,n/(n+10));rate=(1-wR)*rate+wR*(rAvg/rMin)}
   else notes.push('No recent games entered, so the rate comes from the season average alone.');
-  var pm=num(inp.projMin),mins=pm!==null?pm:(1-wR)*sMin+wR*rMin;
+  var role=n>=3&&num(inp.recentMin)&&Math.abs(rMin-sMin)/sMin>.15;   // minutes moved 15%+ lately: a new role, trust recent minutes
+  if(role){wR=Math.max(wR,.6);rate=(1-wR)*(sAvg/sMin)+wR*(rAvg/rMin);notes.push('Role change: '+rMin.toFixed(1)+' minutes lately vs '+sMin.toFixed(1)+' on the season, so recent games carry most of the weight.')}
+  var pm=num(inp.projMin),mins=pm!==null?pm:(1-(role?.75:wR))*sMin+(role?.75:wR)*rMin;
   var v=rate*mins;
   steps.push({label:'Baseline',detail:rate.toFixed(3)+' per minute × '+mins.toFixed(1)+' minutes',value:v});
   function apply(label,detail,mult){var nv=v*mult;steps.push({label:label,detail:detail,delta:nv-v,value:nv});v=nv}
@@ -893,7 +895,7 @@ var FB=null;var JERSEY=JERSEY||{},TCOL=TCOL||{};
   r.lines.games=cur.games.map(function(g){return {away:g.away,home:g.home,spread:g.spread,total:g.total,note:g.note}});
   FB={current:cur,lines:r.lines,h2h:{date:r.date,updated:'saved copy',h2h:r.h2h}};
   JERSEY=r.jersey||{};TCOL=r.tcol||{};
-  FBTOP=r.top5?{date:r.date,picks:r.top5,locked:!!r.top5Locked}:null;LOCKAT=(r.lockAt||r.firstTip)?Date.parse(r.lockAt||r.firstTip):null;
+  FBTOP=r.top5?{date:r.date,picks:r.top5,locked:!!r.top5Locked,final:!!r.top5Final}:null;LOCKAT=(r.lockAt||r.firstTip)?Date.parse(r.lockAt||r.firstTip):null;
   OB={};Object.keys(r.books||{}).forEach(function(b){var m=OB[b]={};Object.keys(r.books[b]).forEach(function(st){String(r.books[b][st]||'').split(';').forEach(function(row){var f=row.split('|');if(f.length<4||!(+f[1]>0))return;var k=norm(f[0]);(m[k]=m[k]||{})[st]={line:+f[1],hi:+f[2],lo:+f[3]}})})});
 }catch(e){FB=null}})();
 function slateSig(d,l,h){return [d&&d.date,d&&d.updated,l&&l.updated,h&&h.h2h&&h.h2h.length].join('|')}
@@ -937,7 +939,7 @@ var FBTOP=FBTOP||null;
     v.textContent=W+'-'+L+(P?'-'+P:'')+(n?' · '+Math.round(100*W/n)+'%':'');
     b.classList.toggle('islive',live>0);b.title=live?live+' Top 10 plays in progress':'';
     var keep=pop.scrollTop;
-    pop.innerHTML='<p class="rechead">Every Top 10 play is set at 11 PM CT the night before and never changes after that. Plays are graded live from the box score as each one hits or misses. Pushes and players who sit out don\'t count.</p>'+
+    pop.innerHTML='<p class="rechead">The Top 10 is set at 11 PM CT the night before and gets one final update at 4:00 PM CT. After that, only a player ruled out before tip changes a play. Plays are graded live from the box score as each one hits or misses. Pushes and players who sit out don\'t count.</p>'+
      (R.days.length?R.days.map(function(d){var w=cnt(d.picks,'W'),l=cnt(d.picks,'L'),p=cnt(d.picks,'P');
        return '<div class="recday"><b>'+esc(d.label)+'</b><span>'+w+'-'+l+(p?'-'+p:'')+'</span></div><ul>'+d.picks.map(function(x){
          var r=x.live?'<i class="livedot"></i>'+x.actual+' · '+esc(x.clock||'Live'):x.result?(MK[x.result]||x.result)+(x.actual!=null&&x.result!=='V'?' ('+x.actual+')':''):'Pending';
@@ -994,7 +996,7 @@ function setBook0(u){
 }
 function slateInput(p,st){
   var g=gameFor(p.t),opp=g?(g.home===p.t?g.away:g.home):'',me=(slate.teams||{})[p.t]||{},u=udFor(p,st),ck=calibration(card).k;
-  return {p_name:p.n,p_opp:opp,dvp:dvpFor(p,st,opp),stat:st,seasonAvg:statAvg(p,st).toFixed(1),seasonMin:p.m,recent:'',oppRank:oppRankFor(p,st,opp),
+  return {p_name:p.n,p_opp:opp,dvp:dvpFor(p,st,opp),stat:st,seasonAvg:statAvg(p,st).toFixed(1),seasonMin:p.m,recent:recentFor(p,st).recent,recentMin:recentFor(p,st).min,oppRank:oppRankFor(p,st,opp),
     total:g&&g.total!=null?g.total:'',spread:g&&g.spread!=null?(g.home===p.t?g.spread:-g.spread):'',teamPPG:me.ppg!=null?me.ppg:'',b2b:!!me.b2b,games:p.g,calK:ck===null?'':ck,boost:boostFor(p,st,autoSet(p))||'',h2hAvg:(function(){var hh=h2hFor(p,st);return hh&&hh.g&&hh.v!=null?hh.v:''})(),h2hGames:(function(){var hh=h2hFor(p,st);return hh&&hh.g&&hh.v!=null?hh.g:''})(),
     books:(u?[{name:BK(),line:u.line,over:m2a(u.hi),under:m2a(u.lo)}]:[]).concat(otherBooks(p,st))};
 }
@@ -1022,7 +1024,7 @@ function bestPrice(p,r){var best=null,over=r.side==='OVER';
 /* lock countdown: picks freeze at the first tip */
 var LOCKAT=LOCKAT||null,lockTimer=null;
 function lockText(){if(!LOCKAT)return '';var ms=LOCKAT-Date.now();
-  if(ms<=0)return '<span class="lock done">Set '+new Date(LOCKAT).toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'})+'</span>';
+  if(ms<=0)return FBTOP&&FBTOP.final?'<span class="lock done">Final</span>':'<span class="lock done">Final update 4:00 PM CT</span>';
   var h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4);return '<span class="lock">Picks lock in '+(h?h+'h ':'')+m+'m</span>'}
 function tickLock(){var el=document.getElementById('lockCd');if(el)el.innerHTML=lockText()}
 function lum(h){h=String(h||'').replace('#','');if(h.length!==6)return 0;var c=[0,2,4].map(function(i){return parseInt(h.substr(i,2),16)/255});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
@@ -1036,6 +1038,13 @@ function renderNbaTop(){
   if(fixed)fixed.forEach(function(r){var p=findPlayer(r.n);if(!p)return;var gi=-1;slate.games.forEach(function(g,i){if(g.home===p.t||g.away===p.t)gi=i});out.push({r:r,p:p,g:slate.games[gi]})});
   if(!fixed)(udRows||[]).forEach(function(r){
     if(out.length>=10||!(r.edge>0)||r.mult<1.6||r.mult>2.1||seen[r.n])return;
+    var cl=(r.side==='OVER'?r.proj-r.line:r.line-r.proj)/r.line;if(cl<.08)return;        // projection must clear the line by 8%+, not just the price
+    var sa=statAvg(findPlayer(r.n)||{},r.st);if(sa>0&&(r.side==='UNDER'?r.line>=sa*1.2:r.line<=sa*.8))return;   // book moved far off his average: it knows about a role change
+    var me=findPlayer(r.n)||{},grp=function(x){x=String(x||'');return /C|PF/.test(x)?'B':/PG|SG/.test(x)?'G':'W'};
+    var outMates=slate.players.filter(function(q){if(q.t!==r.t||q.n===r.n||!isOut(q))return false;   // only new absences: someone out for weeks is already in the recent games
+      var lg=SPLIT&&logFor(q);return !lg||lg.me.slice(-5).some(function(x){return x&&x[0]>0})});
+    if(r.side==='UNDER'&&sa>0&&r.line>sa&&outMates.some(function(q){return q.pts>=14}))return;   // no Unders above his average while a key teammate sits: his role is growing
+    if(r.side==='UNDER'&&outMates.some(function(q){return grp(q.p)===grp(me.p)&&q.m>=12}))return;   // no Unders when a rotation player at his position is out: more minutes for him
     var p=findPlayer(r.n);if(!p)return;var u=udFor(p,r.st);if(!u)return;var other=r.side==='OVER'?u.lo:u.hi;if(!(other>=1.5&&other<=2.3))return;
     var gi=-1;slate.games.forEach(function(g,i){if(g.home===p.t||g.away===p.t)gi=i});if((pg[gi]||0)>=3)return;
     seen[r.n]=1;pg[gi]=(pg[gi]||0)+1;out.push({r:r,p:p,g:slate.games[gi]});
@@ -1149,6 +1158,9 @@ function dvpRank(t,pos,st){
   return {v:v,rank:n,of:tot,avg:sum/tot};
 }
 function ordn(n){var s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
+function recentFor(p,st){var lg=SPLIT&&logFor(p),g=[];if(lg)lg.me.forEach(function(x){if(x&&x[0]>0)g.push(x)});g=g.slice(-5);
+  if(g.length<3)return {recent:'',min:''};
+  return {recent:g.map(function(x){return gstat(x,st)}).join(', '),min:(g.reduce(function(a,x){return a+x[0]},0)/g.length).toFixed(1)}}
 function logFor(p){
   var L=SPLIT&&SPLIT.logs[p.t];if(!L)return null;var k=norm(p.n);
   for(var n in L.p)if(norm(n)===k)return {L:L,me:L.p[n],name:n};return null;

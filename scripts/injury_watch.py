@@ -21,7 +21,16 @@ def main():
     players={}
     for row in fb.get('players','').split(';'):
         f=row.split('|')
-        if len(f)>=6: players[nm(f[0])]={'n':f[0],'t':f[1],'m':float(f[4] or 0),'pts':float(f[5] or 0)}
+        if len(f)>=6: players[nm(f[0])]={'n':f[0],'t':f[1],'pos':f[2],'m':float(f[4] or 0),'pts':float(f[5] or 0)}
+    # who played lately: someone out for weeks is already in everyone's recent numbers, so he isn't news
+    try: logs=json.loads(re.search(r'<script id="splitdata" type="application/json">(.*?)</script>',s,re.S).group(1))['logs']
+    except Exception: logs={}
+    def active(n,t):
+        L=(logs.get(t) or {}).get('p',{})
+        for k,v in L.items():
+            if nm(k)==nm(n): return any(x and x[0]>0 for x in v[-5:])
+        return True
+    grp=lambda x:'B' if re.search('C|PF',str(x)) else ('G' if re.search('PG|SG',str(x)) else 'W')
     # game states today
     sb=requests.get(API+'scoreboard?dates='+today.replace('-',''),timeout=20).json()
     state={}
@@ -54,8 +63,9 @@ def main():
         if x.get('result') or state.get(x['t'])!='pre': continue
         for n,t in new:
             p=players.get(nm(n))
-            major=p and (p['pts']>=18 or (p['m']>=30 and p['pts']>=14))
-            if nm(n)==nm(x['n']) or (t==x['t'] and major):
+            me=players.get(nm(x['n']),{})
+            hurts=p and active(n,t) and (p['pts']>=14 or (grp(p['pos'])==grp(me.get('pos')) and p['m']>=12))
+            if nm(n)==nm(x['n']) or (t==x['t'] and hurts):
                 drop.append(x['n']); print(f"replace {x['n']} {x['side']} {x['line']} {x['st']}: {n} out"); break
     skip=sorted(t for t,s in state.items() if s!='pre')
     gh=os.environ.get('GITHUB_OUTPUT')

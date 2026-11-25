@@ -310,6 +310,18 @@
     "h": "8.5 (8)"
    },
    {
+    "n": "LaMelo Ball",
+    "t": "MIN",
+    "st": "pra",
+    "side": "UNDER",
+    "line": 29.5,
+    "mult": 1.893,
+    "p": 0.63,
+    "edge": 10.17,
+    "proj": 24.71,
+    "h": "20.0 (1)"
+   },
+   {
     "n": "Pelle Larsson",
     "t": "MIA",
     "st": "pra",
@@ -322,6 +334,18 @@
     "h": "18.0 (7)"
    },
    {
+    "n": "Rudy Gobert",
+    "t": "MIN",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 19.5,
+    "mult": 1.87,
+    "p": 0.6303,
+    "edge": 9.55,
+    "proj": 15.91,
+    "h": "17.8 (5)"
+   },
+   {
     "n": "Tyrese Maxey",
     "t": "PHI",
     "st": "pra",
@@ -332,97 +356,10 @@
     "edge": 6.3,
     "proj": 39.76,
     "h": "39.2 (4)"
-   },
-   {
-    "n": "Josh Hart",
-    "t": "NYK",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 9.5,
-    "mult": 2,
-    "p": 0.6645,
-    "edge": 16.45,
-    "proj": 6.33,
-    "h": "12.3 (6)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "LaMelo Ball",
-    "t": "MIN",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 17.5,
-    "mult": 1.962,
-    "p": 0.6642,
-    "edge": 15.45,
-    "proj": 13.76,
-    "h": "16.0 (1)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "Isaac Okoro",
-    "t": "CHI",
-    "st": "pra",
-    "side": "UNDER",
-    "line": 14.5,
-    "mult": 1.971,
-    "p": 0.6487,
-    "edge": 14.13,
-    "proj": 12.45,
-    "h": "9.8 (5)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "Jaime Jaquez Jr.",
-    "t": "MIL",
-    "st": "pts",
-    "side": "OVER",
-    "line": 12.5,
-    "mult": 1.971,
-    "p": 0.6398,
-    "edge": 13.24,
-    "proj": 15.85,
-    "h": "13.3 (6)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "Jarrett Allen",
-    "t": "CLE",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 13.5,
-    "mult": 1.877,
-    "p": 0.662,
-    "edge": 12.93,
-    "proj": 10.06,
-    "h": "12.2 (8)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "Mikal Bridges",
-    "t": "NYK",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 11.5,
-    "mult": 1.833,
-    "p": 0.6728,
-    "edge": 12.72,
-    "proj": 8.29,
-    "h": "12.8 (9)",
-    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
   "first_tip": "2026-11-25T22:00:00.000+00:00",
-  "lock_at": "2026-11-25T05:00:00+00:00",
-  "repicks": [
-   {
-    "at": "2026-11-25T11:36-06:00",
-    "dropped": [
-     "LaMelo Ball",
-     "Rudy Gobert"
-    ]
-   }
-  ]
+  "lock_at": "2026-11-25T05:00:00+00:00"
  }
 }
