@@ -358,18 +358,6 @@
     "h": "21.6 (8)"
    },
    {
-    "n": "Keegan Murray",
-    "t": "SAC",
-    "st": "pr",
-    "side": "UNDER",
-    "line": 18.5,
-    "mult": 1.962,
-    "p": 0.6278,
-    "edge": 11.81,
-    "proj": 14.78,
-    "h": "14.8 (4)"
-   },
-   {
     "n": "Julius Randle",
     "t": "BKN",
     "st": "pts",
@@ -404,6 +392,19 @@
     "edge": 10.14,
     "proj": 23.57,
     "h": "19.8 (4)"
+   },
+   {
+    "n": "Myles Turner",
+    "t": "MIL",
+    "st": "pr",
+    "side": "OVER",
+    "line": 15.5,
+    "mult": 1.971,
+    "p": 0.6088,
+    "edge": 10.14,
+    "proj": 17.37,
+    "h": "19.9 (7)",
+    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
@@ -415,6 +416,12 @@
     "dropped": [
      "Tyrese Maxey",
      "VJ Edgecombe"
+    ]
+   },
+   {
+    "at": "2026-11-25T17:17-06:00",
+    "dropped": [
+     "Keegan Murray"
     ]
    }
   ],
