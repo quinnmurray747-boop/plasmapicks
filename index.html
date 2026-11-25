@@ -313,6 +313,12 @@ button[data-add]{display:none!important}
 @media(max-width:560px){.discord{padding:8px 12px;font-size:12px}.record span{display:none}}
 
 /* ---- best price, lock countdown, results link ---- */
+.pick.tpick{border-left:5px solid var(--tc,var(--accent))}
+.pick .phead{display:flex;align-items:center;gap:10px;width:100%;min-width:0}
+.pick .phead .who{font-size:16.5px;line-height:1.15;min-width:0}
+.pbadge{flex:0 0 auto;display:grid;place-items:center;align-content:center;width:46px;height:46px;border-radius:50%;border:2px solid;box-shadow:0 4px 12px -4px rgba(0,0,0,.6)}
+.pbadge b{font-family:var(--display);font-weight:400;font-size:16px;letter-spacing:.5px;line-height:1}
+.pbadge i{font-style:normal;font-family:var(--mono);font-size:9.5px;font-weight:700;opacity:.9;line-height:1.1;margin-top:1px}
 .pick .best{font-size:11.5px;font-weight:600;color:#86efac;background:rgba(74,222,128,.10);border:1px solid rgba(74,222,128,.30);border-radius:8px;padding:3px 8px}
 .slatehead .lock{font-size:12px;font-weight:700;color:var(--plum);background:var(--accent);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .slatehead .lock.done{background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
@@ -878,7 +884,7 @@ $('slate').addEventListener('click',function(e){
   if(t.dataset.player){var p=findPlayer(t.dataset.player);if(p)applyPlayer(p)}
   if(t.dataset.restore){if(udRestored[t.dataset.restore])delete udRestored[t.dataset.restore];else udRestored[t.dataset.restore]=1;outKey='';renderSlate();var cur=findPlayer($('p_name').value);if(cur)$('boost').value=boostFor(cur,$('p_stat').value,autoSet(cur))||'';render();setTimeout(function(){computeBoard();renderBoard()},30)}
 });
-var FB=null;
+var FB=null;var JERSEY=JERSEY||{},TCOL=TCOL||{};
 (function(){try{var r=JSON.parse(document.getElementById('fbdata').textContent);
   var teams={};r.teams.split(';').forEach(function(x){var f=x.split('|');teams[f[0]]={ppg:+f[1],opp:+f[2],def:+f[3],defReb:+f[4],defAst:+f[5],b2b:f[6]==='1'}});
   var cur={date:r.date,label:r.label,updated:r.updated,teams:teams,
@@ -886,6 +892,7 @@ var FB=null;
     players:r.players.split(';').map(function(x){var f=x.split('|');return {n:f[0],t:f[1],p:f[2],g:+f[3],m:+f[4],pts:+f[5],reb:+f[6],ast:+f[7],tpm:+f[8]}})};
   r.lines.games=cur.games.map(function(g){return {away:g.away,home:g.home,spread:g.spread,total:g.total,note:g.note}});
   FB={current:cur,lines:r.lines,h2h:{date:r.date,updated:'saved copy',h2h:r.h2h}};
+  JERSEY=r.jersey||{};TCOL=r.tcol||{};
   FBTOP=r.top5?{date:r.date,picks:r.top5,locked:!!r.top5Locked}:null;LOCKAT=(r.lockAt||r.firstTip)?Date.parse(r.lockAt||r.firstTip):null;
   OB={};Object.keys(r.books||{}).forEach(function(b){var m=OB[b]={};Object.keys(r.books[b]).forEach(function(st){String(r.books[b][st]||'').split(';').forEach(function(row){var f=row.split('|');if(f.length<4||!(+f[1]>0))return;var k=norm(f[0]);(m[k]=m[k]||{})[st]={line:+f[1],hi:+f[2],lo:+f[3]}})})});
 }catch(e){FB=null}})();
@@ -1018,6 +1025,11 @@ function lockText(){if(!LOCKAT)return '';var ms=LOCKAT-Date.now();
   if(ms<=0)return '<span class="lock done">Set '+new Date(LOCKAT).toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'})+'</span>';
   var h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4);return '<span class="lock">Picks lock in '+(h?h+'h ':'')+m+'m</span>'}
 function tickLock(){var el=document.getElementById('lockCd');if(el)el.innerHTML=lockText()}
+function lum(h){h=String(h||'').replace('#','');if(h.length!==6)return 0;var c=[0,2,4].map(function(i){return parseInt(h.substr(i,2),16)/255});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+function badge(n,t){var c=TCOL[t]||['6d28d9','ffffff'],a='#'+c[0],b='#'+c[1],ini=String(n).replace(/\b(Jr|Sr|II|III|IV)\.?$/,'').trim().split(/[\s-]+/).filter(Boolean),j=JERSEY[n];
+  ini=(ini[0]||'?').charAt(0)+(ini.length>1?ini[ini.length-1].charAt(0):'');
+  var stripe=lum(a)<.12?b:a;
+  return {html:'<span class="pbadge" style="background:'+a+';border-color:'+b+';color:'+(lum(a)>.6?'#1a0b2e':'#fff')+'"><b>'+esc(ini.toUpperCase())+'</b>'+(j!=null?'<i>#'+esc(j)+'</i>':'')+'</span>',stripe:stripe}}
 function renderNbaTop(){
   var box=$('nbaTop5');if(!box)return;var out=[],seen={},pg={};
   var fixed=!window.__forceTop5&&FBTOP&&slate&&FBTOP.date===slate.date&&FBTOP.picks&&FBTOP.picks.length?FBTOP.picks:null;
@@ -1032,7 +1044,8 @@ function renderNbaTop(){
   if(!out.length){box.hidden=true;return}box.hidden=false;
   $('nbaTopSub').textContent=(slate.label||'')+'. '+BK()+' lines read '+(udMeta.updated||'')+'.';tickLock();if(!lockTimer)lockTimer=setInterval(tickLock,30000);
   $('nbaTopCards').innerHTML=out.map(function(x,i){var r=x.r,g=x.g,opp=g?(g.home===x.p.t?'vs '+g.away:'@ '+g.home):'';
-    return '<button type="button" class="pick" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="rk">'+(i+1)+'</span><span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b><b class="up">'+sgn(r.edge)+' edge</b></span>'+bestPrice(x.p,r)+'<span class="why">Avg '+(statAvg(x.p,r.st)!=null?(+statAvg(x.p,r.st)).toFixed(1):'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
+    var bd=badge(r.n,x.p.t);
+    return '<button type="button" class="pick tpick" style="--tc:'+bd.stripe+'" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="phead"><span class="rk">'+(i+1)+'</span>'+bd.html+'<span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b><b class="up">'+sgn(r.edge)+' edge</b></span>'+bestPrice(x.p,r)+'<span class="why">Avg '+(statAvg(x.p,r.st)!=null?(+statAvg(x.p,r.st)).toFixed(1):'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
 }
 $('nbaTop5').addEventListener('click',function(e){var t=e.target.closest('button');if(!t||!t.dataset.udp)return;var p=findPlayer(t.dataset.udp);if(!p)return;$('p_stat').value=t.dataset.uds;applyPlayer(p);$('f').scrollIntoView({block:'start'})});
 function renderBoard(){

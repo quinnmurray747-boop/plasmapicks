@@ -30,6 +30,8 @@ def main(box_path):
         fb['h2h']=build_stats.h2h(build_stats.pd.concat([d]+prev,ignore_index=True),odds['games'])
     except Exception as e: print('h2h skipped:',e)
     fb['firstTip']=odds.get('first_tip')
+    try: fb['jersey'],fb['tcol']=build_stats.looks(d)
+    except Exception as e: print('badges skipped:',e)
     yd=set(odds.get('yesterday',[]))
     teams=';'.join(t[:-1]+'1' if t.split('|')[0] in yd else t for t in teams.split(';')); fb['teams']=teams
     b2b={t.split('|')[0] for t in teams.split(';') if t.endswith('|1')}

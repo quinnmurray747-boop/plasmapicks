@@ -76,3 +76,11 @@ def h2h(hist, games):
         if m.empty: out.append(f'{n}|0'); continue
         out.append(f"{n}|{len(m)}|{m.points.mean():.1f}|{m.rebounds.mean():.1f}|{m.assists.mean():.1f}")
     return ';'.join(out)
+
+def looks(d):
+    """Jersey numbers (latest game) and team colors, for the Top 10 player badges."""
+    last=d.sort_values('date').groupby('name').tail(1)
+    jersey={r['name']:str(r.athlete_jersey) for _,r in last.iterrows() if r.athlete_jersey==r.athlete_jersey and str(r.athlete_jersey) not in ('','None','nan')}
+    t=d.sort_values('date').groupby('tm').tail(1)
+    colors={r.tm:[str(r.team_color or '6d28d9'),str(r.team_alternate_color or 'ffffff')] for _,r in t.iterrows()}
+    return jersey,colors
