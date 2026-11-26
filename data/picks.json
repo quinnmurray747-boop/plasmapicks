@@ -576,5 +576,133 @@
   "final": true,
   "final_at": "2026-11-25T16:07-06:00",
   "graded": true
+ },
+ "2026-11-27": {
+  "label": "Friday, Nov. 27",
+  "picks": [
+   {
+    "n": "Bam Adebayo",
+    "t": "MIA",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 25.5,
+    "mult": 1.926,
+    "p": 0.6626,
+    "edge": 14.33,
+    "proj": 20.82,
+    "h": "25.0 (5)"
+   },
+   {
+    "n": "Kelly Oubre Jr.",
+    "t": "IND",
+    "st": "pr",
+    "side": "OVER",
+    "line": 15.5,
+    "mult": 1.87,
+    "p": 0.677,
+    "edge": 14.23,
+    "proj": 20.43,
+    "h": "19.0 (2)"
+   },
+   {
+    "n": "John Collins",
+    "t": "DET",
+    "st": "pr",
+    "side": "OVER",
+    "line": 18.5,
+    "mult": 1.935,
+    "p": 0.6588,
+    "edge": 14.2,
+    "proj": 22.78,
+    "h": "19.5 (2)"
+   },
+   {
+    "n": "Nickeil Alexander-Walker",
+    "t": "ATL",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 20.5,
+    "mult": 1.847,
+    "p": 0.6632,
+    "edge": 12.18,
+    "proj": 15.87,
+    "h": "14.0 (6)"
+   },
+   {
+    "n": "Derrick White",
+    "t": "BOS",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 12.5,
+    "mult": 1.99,
+    "p": 0.62,
+    "edge": 11.75,
+    "proj": 11.46,
+    "h": "15.4 (7)"
+   },
+   {
+    "n": "Jalen Johnson",
+    "t": "ATL",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 18.5,
+    "mult": 1.943,
+    "p": 0.6122,
+    "edge": 9.76,
+    "proj": 15.46,
+    "h": "18.9 (7)"
+   },
+   {
+    "n": "Landry Shamet",
+    "t": "NYK",
+    "st": "pts",
+    "side": "OVER",
+    "line": 12.5,
+    "mult": 1.84,
+    "p": 0.638,
+    "edge": 9.45,
+    "proj": 16.74,
+    "h": "12.0 (5)"
+   },
+   {
+    "n": "LeBron James",
+    "t": "PHI",
+    "st": "pra",
+    "side": "OVER",
+    "line": 31.5,
+    "mult": 1.82,
+    "p": 0.6286,
+    "edge": 7.91,
+    "proj": 37.77,
+    "h": "33.7 (4)"
+   },
+   {
+    "n": "Mikal Bridges",
+    "t": "NYK",
+    "st": "pra",
+    "side": "OVER",
+    "line": 18.5,
+    "mult": 1.909,
+    "p": 0.5874,
+    "edge": 6.36,
+    "proj": 21.7,
+    "h": "27.1 (7)"
+   },
+   {
+    "n": "Ivica Zubac",
+    "t": "IND",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 12.5,
+    "mult": 1.794,
+    "p": 0.6117,
+    "edge": 5.43,
+    "proj": 10.78,
+    "h": "12.2 (5)"
+   }
+  ],
+  "locked": false,
+  "first_tip": "2026-11-28T00:00:00.000+00:00",
+  "lock_at": "2026-11-27T05:00:00+00:00"
  }
 }
