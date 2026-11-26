@@ -35,7 +35,9 @@ def main():
     sb=requests.get(API+'scoreboard?dates='+today.replace('-',''),timeout=20).json()
     state={}
     for e in sb.get('events',[]):
-        for c in e['competitions'][0]['competitors']: state[tm(c['team']['abbreviation'])]=e['status']['type']['state']
+        st=e['status']['type']['state']
+        if st=='pre' and dt.datetime.fromisoformat(e['date'].replace('Z','+00:00'))<=dt.datetime.now(dt.timezone.utc): st='in'   # scheduled tip has passed
+        for c in e['competitions'][0]['competitors']: state[tm(c['team']['abbreviation'])]=st
     if not state: print('no games today'); return
     # injury report
     inj=requests.get(API+'injuries',timeout=20).json()

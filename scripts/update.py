@@ -8,9 +8,13 @@ import build_stats, fetch_odds, subprocess
 def main(box_path):
     now=dt.datetime.now(ZoneInfo('America/Chicago')); today=dt.date.fromisoformat(os.environ['SLATE_DATE']) if os.environ.get('SLATE_DATE') else (now.date()+dt.timedelta(days=1) if now.hour>=21 else now.date())  # late at night, build tomorrow's slate
     d=build_stats.load(box_path)
-    players=build_stats.players_str(d); teams=build_stats.teams_str(d,today); sp=build_stats.splits(d)
+    players=build_stats.players_str(d); sp=build_stats.splits(d)
     known={p.split('|')[0] for p in players.split(';')}
-    odds=fetch_odds.slate(today, known)          # games, lines per book, injuries
+    for _ in range(5):                            # no games that day (Thanksgiving, All-Star break): show the next slate
+        odds=fetch_odds.slate(today, known)       # games, lines per book, injuries
+        if odds['games'] or os.environ.get('SLATE_DATE'): break
+        print('no games on',today,'- moving to the next day'); today+=dt.timedelta(days=1)
+    teams=build_stats.teams_str(d,today)
     problems=[]
     if not odds['games']: problems.append('no games found for today')
     for g in odds['games']:
@@ -69,7 +73,8 @@ def main(box_path):
             sb=requests.get('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates='+today.strftime('%Y%m%d'),timeout=20).json()
             T={'NO':'NOP','SA':'SAS','UTAH':'UTA','GS':'GSW','NY':'NYK','WSH':'WAS'}; started=set()
             for e in sb.get('events',[]):
-                if e['status']['type']['state']!='pre': started|={T.get(c['team']['abbreviation'],c['team']['abbreviation']) for c in e['competitions'][0]['competitors']}
+                tip=dt.datetime.fromisoformat(e['date'].replace('Z','+00:00'))
+                if e['status']['type']['state']!='pre' or tip<=now+dt.timedelta(minutes=5): started|={T.get(c['team']['abbreviation'],c['team']['abbreviation']) for c in e['competitions'][0]['competitors']}
             gi={}
             for i,g in enumerate(odds['games']): gi[g[0]]=i; gi[g[1]]=i
             keep=[x for x in day['picks'] if x['t'] in started or x.get('result')]; per={}
