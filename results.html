@@ -54,6 +54,18 @@ td.n,th.n{text-align:right;font-family:var(--mono)}
 .dayhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .dayhead b{font-size:14px}.dayhead span{font-family:var(--mono);color:var(--muted)}
 .res{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.cal{display:flex;flex-wrap:wrap;gap:8px}
+.cd{width:74px;border-radius:12px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.cd span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.cd b{font-family:var(--display,inherit);font-weight:400;font-size:22px;line-height:1}
+.cd em{font-style:normal;font-family:var(--mono,monospace);font-size:12px;font-weight:700}
+.cd.up{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.45)}.cd.up em{color:#4ade80}
+.cd.dn{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.4)}.cd.dn em{color:#f87171}
+.glance{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.glance div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.glance span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.glance b{font-size:16px}.glance b.pos{color:#4ade80}.glance b.neg{color:#f87171}
+@media (max-width:640px){.glance{grid-template-columns:1fr 1fr}.cd{width:62px}}
 .rLive{color:var(--accent)}.livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f87171;margin-right:6px;vertical-align:1px;animation:lvp 1.4s ease-in-out infinite}@keyframes lvp{50%{opacity:.25}}
 .rW{color:var(--good)}.rL{color:var(--bad)}.rP,.rV,.rpend{color:var(--muted)}
 .empty{color:var(--muted);margin:0}
@@ -78,6 +90,7 @@ footer{color:var(--muted);font-size:12px}
   <p class="lead">The Top 10 is set at 11 PM CT the night before and gets one final update at 4:00 PM CT. Only the final plays count, graded live from the box score. Pushes and players who sit out don't count toward the record.</p>
 </header>
 <section class="stats" id="stats"></section>
+<section class="panel"><h2>Day by day</h2><div class="cal" id="cal"></div><div class="glance" id="glance"></div></section>
 <section class="panel chart"><h2>Units over time</h2><div id="chart"></div><p class="lead" style="font-size:12.5px;margin-top:8px">One unit on every play at the DraftKings price it was locked at.</p></section>
 <div class="two">
   <section class="panel"><h2>By prop</h2><div id="byStat"></div></section>
@@ -109,6 +122,20 @@ function draw(H){
     stat('Win rate',pct(T),'52.4% breaks even at −110','')+
     stat('Units',T.n?fu(T.u):'0.00','1 unit per play',T.u>0?'pos':T.u<0?'neg':'')+
     stat('Days tracked',String(done.length),days.length>done.length?'Today pending':'','');
+  // calendar of graded days + streak + best/worst prop
+  var gd=done.filter(function(d){var t=tally(d.picks);return t.n});
+  document.getElementById('cal').innerHTML=gd.length?gd.map(function(d){var t=tally(d.picks),c=t.w>t.l?'up':t.l>t.w?'dn':'ev',dt=new Date(d.date+'T12:00:00');
+    return '<div class="cd '+c+'" title="'+esc(d.label)+': '+t.w+'-'+t.l+'"><span>'+dt.toLocaleDateString([],{weekday:'short'})+'</span><b>'+dt.getDate()+'</b><em>'+t.w+'-'+t.l+'</em></div>'}).join(''):'<p class="empty">Fills in as nights are graded.</p>';
+  var seq=[];gd.forEach(function(d){d.picks.forEach(function(x){if(x.result==='W'||x.result==='L')seq.push(x.result)})});
+  var sk=0,sv=seq.length?seq[seq.length-1]:'';for(var i=seq.length-1;i>=0&&seq[i]===sv;i--)sk++;
+  var by={};all.forEach(function(x){if(x.result==='W'||x.result==='L'){(by[x.st]=by[x.st]||{w:0,l:0})[x.result==='W'?'w':'l']++}});
+  var ks=Object.keys(by).filter(function(k){return by[k].w+by[k].l>=3}).sort(function(a,b){return by[b].w/(by[b].w+by[b].l)-by[a].w/(by[a].w+by[a].l)});
+  var best=ks[0],worst=ks.length>1?ks[ks.length-1]:null,wd=gd.filter(function(d){var t=tally(d.picks);return t.w>t.l}).length;
+  document.getElementById('glance').innerHTML=
+    '<div><span>Current streak</span><b class="'+(sv==='W'?'pos':sv==='L'?'neg':'')+'">'+(sk?(sv==='W'?'W':'L')+sk:'–')+'</b></div>'+
+    '<div><span>Winning nights</span><b>'+wd+' of '+gd.length+'</b></div>'+
+    '<div><span>Best prop</span><b class="pos">'+(best?esc(ST[best]||best)+' '+by[best].w+'-'+by[best].l:'–')+'</b></div>'+
+    '<div><span>Toughest prop</span><b class="neg">'+(worst?esc(ST[worst]||worst)+' '+by[worst].w+'-'+by[worst].l:'–')+'</b></div>';
   // chart: cumulative units by graded day
   var pts=[{label:'Start',u:0}],c=0;done.forEach(function(d){var t=tally(d.picks);if(!t.n&&!t.p)return;c+=t.u;pts.push({label:d.label,u:c})});
   var ch=document.getElementById('chart');

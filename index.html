@@ -313,6 +313,35 @@ button[data-add]{display:none!important}
 @media(max-width:560px){.discord{padding:8px 12px;font-size:12px}.record span{display:none}}
 
 /* ---- best price, lock countdown, results link ---- */
+/* tonight strip + ticker */
+.tonight{width:100%;box-sizing:border-box;max-width:var(--maxw,1232px);margin:18px auto 6px;padding:0;align-self:stretch}
+.tstrip{display:grid;grid-template-columns:1.6fr 0.7fr 1.3fr 1fr 1.1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tstrip div{background:var(--panel2);padding:10px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.tstrip span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tstrip b{font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticker{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:10px 0 2px;scroll-snap-type:x proximity}
+.ticker::-webkit-scrollbar{display:none}
+.tg{flex:0 0 auto;scroll-snap-align:start;display:grid;grid-template-columns:auto;gap:2px;min-width:104px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.tg span{display:flex;justify-content:space-between;gap:10px}
+.tg span.ld{color:var(--ink)}
+.tg b{font-weight:700}
+.tg em{font-style:normal;font-size:10.5px;color:var(--muted);margin-top:2px}
+.tg.tin{border-color:rgba(248,113,113,.45)}
+.tg.tin em{color:#fca5a5}
+.livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f87171;margin-right:5px;vertical-align:1px;animation:lvp 1.4s ease-in-out infinite}
+/* card: edge meter, reason, result stamp */
+.emeter{display:flex;align-items:center;gap:8px;width:100%}
+.ebar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.ebar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--tc,var(--accent)),var(--accent))}
+.emeter em{font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--good,#4ade80);white-space:nowrap}
+.pick .reason{font-size:13px;line-height:1.35;color:var(--ink);opacity:.92;border-left:2px solid var(--line2,var(--line));padding-left:8px}
+.pick .stamp:empty{display:none}
+.pick .stamp{align-self:flex-start;font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--ink)}
+.pick.isW{border-color:rgba(74,222,128,.6)}.pick.isW .stamp{background:rgba(74,222,128,.18);color:#4ade80}
+.pick.isL{opacity:.78}.pick.isL .stamp{background:rgba(248,113,113,.18);color:#f87171}
+.pick.isLive .stamp{background:rgba(248,113,113,.12);color:#fca5a5}
+.pick.isV .stamp,.pick.isP .stamp{color:var(--muted)}
+@media (max-width:700px){.tonight{padding:0 2px}.tstrip{grid-template-columns:1fr 1fr}.tstrip div:first-child{grid-column:1/-1}.tstrip div{padding:8px 10px}.tstrip b{font-size:15px}}
 .pick.tpick{border-left:5px solid var(--tc,var(--accent))}
 .pick .phead{display:flex;align-items:center;gap:10px;width:100%;min-width:0}
 .pick .phead .who{font-size:16.5px;line-height:1.15;min-width:0}
@@ -403,6 +432,10 @@ footer a{color:var(--accent)}
 <div class="hero">
   <img class="banner" src="banner.png?v=2" width="1500" height="500" alt="Plasma Picks. NBA player props.">
 </div>
+<section class="tonight" id="tonight" hidden>
+  <div class="tstrip" id="tstrip"></div>
+  <div class="ticker" id="ticker" hidden></div>
+</section>
 <header class="pagehead">
   <h1>Prop Engine</h1>
   <p>Simulated projections for NBA player props, priced against real sportsbook lines.</p>
@@ -947,8 +980,9 @@ var FBTOP=FBTOP||null;
      '<a class="reslink" href="results.html">See the full results →</a>';
     pop.scrollTop=keep;
   }
+  window.__rec=R;
   draw();
-  if(window.PPLive)PPLive.watch(R.days,draw);
+  if(window.PPLive)PPLive.watch(R.days,function(){draw();if(typeof renderTonight==='function')renderTonight()});
   b.addEventListener('click',function(){var o=pop.hidden;pop.hidden=!o;b.setAttribute('aria-expanded',String(o))});
   document.addEventListener('click',function(e){if(!pop.hidden&&!e.target.closest('.recwrap')){pop.hidden=true;b.setAttribute('aria-expanded','false')}});
 })();
@@ -1032,6 +1066,50 @@ function badge(n,t){var c=TCOL[t]||['6d28d9','ffffff'],a='#'+c[0],b='#'+c[1],ini
   ini=(ini[0]||'?').charAt(0)+(ini.length>1?ini[ini.length-1].charAt(0):'');
   var stripe=lum(a)<.12?b:a;
   return {html:'<span class="pbadge" style="background:'+a+';border-color:'+b+';color:'+(lum(a)>.6?'#1a0b2e':'#fff')+'"><b>'+esc(ini.toUpperCase())+'</b>'+(j!=null?'<i>#'+esc(j)+'</i>':'')+'</span>',stripe:stripe}}
+/* one-line reason for a Top 10 play: the strongest of recent form and the position matchup that backs it */
+function reasonFor(p,r,g){
+  var st=STATS[r.st]?STATS[r.st].short:r.st,over=r.side==='OVER',best=null;
+  var rc=recentFor(p,r.st);if(rc.recent){var a=rc.recent.split(',').map(Number),av=a.reduce(function(x,y){return x+y},0)/a.length,m=(over?av-r.line:r.line-av)/r.line;
+    if(m>=.06)best={m:m,t:'Averaging '+av.toFixed(1)+' '+st+' over his last '+a.length}}
+  var opp=g?(g.home===p.t?g.away:g.home):'',d=opp&&dvpFor(p,r.st,opp);
+  if(d){var m2=over?d.ratio-1:1-d.ratio;if(m2>=.04&&(!best||m2>best.m))best={m:m2,t:opp+' allows '+d.v.toFixed(1)+' '+st+' to '+({PG:'point guards',SG:'shooting guards',SF:'small forwards',PF:'power forwards',C:'centers'}[d.pos]||d.pos+'s')+', '+Math.round(Math.abs(d.ratio-1)*100)+'% '+(d.ratio>1?'above':'below')+' average'}}
+  return best?best.t:'Projects '+r.proj.toFixed(1)+' against a '+r.line+' line';
+}
+/* live result stamps on the Top 10 cards */
+var TOPLIVE=null;
+function paintStamps(){if(!FBTOP||!FBTOP.picks)return;
+  FBTOP.picks.forEach(function(x){var el=document.querySelector('.stamp[data-k="'+(x.n+'|'+x.st).replace(/"/g,'\\"')+'"]');if(!el)return;var card=el.closest('.pick');
+    card.classList.remove('isW','isL','isLive','isV','isP');el.textContent='';
+    if(x.live){card.classList.add('isLive');el.innerHTML='<i class="livedot"></i>'+x.actual+' of '+x.line+' · '+esc(x.clock||'Live')}
+    else if(x.result){card.classList.add('is'+x.result);el.textContent=({W:'✓ HIT',L:'✗ MISS',P:'PUSH',V:'VOID'})[x.result]+(x.actual!=null&&x.result!=='V'?' · '+x.actual:'')}});
+}
+function watchTop(){if(TOPLIVE||!window.PPLive||!FBTOP||!FBTOP.locked||!FBTOP.picks)return;
+  TOPLIVE=PPLive.watch([{date:FBTOP.date,picks:FBTOP.picks}],function(){paintStamps();renderTonight()})}
+/* "Tonight" strip: slate, Top 10 status, last night, record */
+function renderTonight(){var box=$('tonight');if(!box||!slate)return;box.hidden=false;
+  var R=window.__rec,last=null,rec=$('recVal')?$('recVal').textContent:'';
+  if(R)R.days.forEach(function(d){if(!last&&d.date<slate.date&&d.picks.some(function(x){return x.result&&x.result!=='V'}))last=d});
+  var lw=0,ll=0;if(last)last.picks.forEach(function(x){if(x.result==='W')lw++;if(x.result==='L')ll++});
+  var tw=0,tl=0,tlv=0;if(FBTOP&&FBTOP.date===slate.date&&FBTOP.picks)FBTOP.picks.forEach(function(x){if(x.result==='W')tw++;if(x.result==='L')tl++;if(x.live)tlv++});
+  var lk=($('lockCd')?$('lockCd').textContent:'').replace(/^Picks lock in/,'Locks in');
+  var sd=new Date(slate.date+'T12:00:00'),it=[['Slate',sd.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'})],['Games',String(slate.games.length)],['Top 10',(tw+tl||tlv)?tw+'-'+tl+(tlv?' · '+tlv+' live':''):(lk||'Building')]];
+  if(last){var ld=new Date(last.date+'T12:00:00'),yd=new Date(slate.date+'T12:00:00');yd.setDate(yd.getDate()-1);it.push([ld.toDateString()===yd.toDateString()?'Last night':'Last slate · '+ld.toLocaleDateString([],{weekday:'short'}),lw+'-'+ll])}
+  if(rec)it.push(['Record',rec]);
+  $('tstrip').innerHTML=it.map(function(x){return '<div><span>'+esc(x[0])+'</span><b>'+esc(x[1])+'</b></div>'}).join('');
+  ticker();
+}
+/* live scores ticker for the slate's games (ESPN), refreshed every minute while games are on */
+var tickT=null,tickDate='';
+function ticker(){if(!slate||tickDate===slate.date&&tickT)return;tickDate=slate.date;
+  (function go(){fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates='+slate.date.replace(/-/g,''),{cache:'no-store'}).then(function(r){return r.json()}).then(function(sb){
+    var ev=sb.events||[],box=$('ticker');if(!ev.length){box.hidden=true;return}box.hidden=false;var more=false;
+    box.innerHTML=ev.map(function(e){var c=e.competitions[0],h=c.competitors.filter(function(x){return x.homeAway==='home'})[0],a=c.competitors.filter(function(x){return x.homeAway==='away'})[0],st=e.status.type.state;
+      if(st!=='post')more=true;
+      var sc=st==='pre'?'':' <b>'+a.score+'</b>',sh=st==='pre'?'':' <b>'+h.score+'</b>',lead=st!=='pre'?(+a.score>+h.score?'a':+h.score>+a.score?'h':''):'';
+      var tag=st==='in'?'<i class="livedot"></i>'+esc(e.status.type.shortDetail):st==='post'?'Final':new Date(e.date).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+      return '<div class="tg t'+st+'"><span class="'+(lead==='a'?'ld':'')+'">'+esc(a.team.abbreviation)+sc+'</span><span class="'+(lead==='h'?'ld':'')+'">'+esc(h.team.abbreviation)+sh+'</span><em>'+tag+'</em></div>'}).join('');
+    clearTimeout(tickT);tickT=more?setTimeout(go,60000):1}).catch(function(){tickT=setTimeout(go,120000)})})();
+}
 function renderNbaTop(){
   var box=$('nbaTop5');if(!box)return;var out=[],seen={},pg={};
   var fixed=!window.__forceTop5&&FBTOP&&slate&&FBTOP.date===slate.date&&FBTOP.picks&&FBTOP.picks.length?FBTOP.picks:null;
@@ -1054,7 +1132,8 @@ function renderNbaTop(){
   $('nbaTopSub').textContent=(slate.label||'')+'. '+BK()+' lines read '+(udMeta.updated||'')+'.';tickLock();if(!lockTimer)lockTimer=setInterval(tickLock,30000);
   $('nbaTopCards').innerHTML=out.map(function(x,i){var r=x.r,g=x.g,opp=g?(g.home===x.p.t?'vs '+g.away:'@ '+g.home):'';
     var bd=badge(r.n,x.p.t);
-    return '<button type="button" class="pick tpick" style="--tc:'+bd.stripe+'" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="phead"><span class="rk">'+(i+1)+'</span>'+bd.html+'<span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b><b class="up">'+sgn(r.edge)+' edge</b></span>'+bestPrice(x.p,r)+'<span class="why">Avg '+(statAvg(x.p,r.st)!=null?(+statAvg(x.p,r.st)).toFixed(1):'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
+    return '<button type="button" class="pick tpick" style="--tc:'+bd.stripe+'" data-udp="'+esc(r.n)+'" data-uds="'+r.st+'"><span class="phead"><span class="rk">'+(i+1)+'</span>'+bd.html+'<span class="who">'+esc(r.n)+' <i>'+esc(x.p.t)+' '+opp+'</i></span></span><span class="stamp" data-k="'+esc(r.n+'|'+r.st)+'"></span><span class="what">'+(r.side==='OVER'?'Higher':'Lower')+' '+r.line+' '+esc(STATS[r.st].short)+'</span><span class="nums"><b>'+r.mult.toFixed(2)+'x</b><b>'+Math.round(r.p*100)+'% chance</b></span><span class="emeter" title="Edge over the break-even price"><span class="ebar"><i style="width:'+Math.max(8,Math.min(100,r.edge/18*100)).toFixed(0)+'%"></i></span><em>'+sgn(r.edge)+' edge</em></span><span class="reason">'+esc(reasonFor(x.p,r,g))+'</span>'+bestPrice(x.p,r)+'<span class="why">Avg '+(statAvg(x.p,r.st)!=null?(+statAvg(x.p,r.st)).toFixed(1):'–')+' · vs opp '+esc(r.h||'N/A')+' · proj '+r.proj.toFixed(1)+'</span></button>'}).join('');
+  paintStamps();renderTonight();watchTop();
 }
 $('nbaTop5').addEventListener('click',function(e){var t=e.target.closest('button');if(!t||!t.dataset.udp)return;var p=findPlayer(t.dataset.udp);if(!p)return;$('p_stat').value=t.dataset.uds;applyPlayer(p);$('f').scrollIntoView({block:'start'})});
 function renderBoard(){
