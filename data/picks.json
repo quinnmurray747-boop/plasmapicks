@@ -581,18 +581,6 @@
   "label": "Friday, Nov. 27",
   "picks": [
    {
-    "n": "Ja'Kobe Walter",
-    "t": "TOR",
-    "st": "ast",
-    "side": "OVER",
-    "line": 2.5,
-    "mult": 2.02,
-    "p": 0.6897,
-    "edge": 19.46,
-    "proj": 2.94,
-    "h": "1.8 (8)"
-   },
-   {
     "n": "Yaxel Lendeborg",
     "t": "GSW",
     "st": "pra",
@@ -603,18 +591,6 @@
     "edge": 14.99,
     "proj": 22.09,
     "h": "N/A"
-   },
-   {
-    "n": "John Collins",
-    "t": "DET",
-    "st": "pts",
-    "side": "OVER",
-    "line": 12.5,
-    "mult": 1.943,
-    "p": 0.6542,
-    "edge": 13.95,
-    "proj": 16.75,
-    "h": "16.5 (2)"
    },
    {
     "n": "Rui Hachimura",
@@ -653,30 +629,6 @@
     "h": "N/A"
    },
    {
-    "n": "Nickeil Alexander-Walker",
-    "t": "ATL",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 20.5,
-    "mult": 1.847,
-    "p": 0.6657,
-    "edge": 12.43,
-    "proj": 15.77,
-    "h": "14.0 (6)"
-   },
-   {
-    "n": "Landry Shamet",
-    "t": "NYK",
-    "st": "pa",
-    "side": "OVER",
-    "line": 15.5,
-    "mult": 1.952,
-    "p": 0.6351,
-    "edge": 12.28,
-    "proj": 18.55,
-    "h": "13.6 (5)"
-   },
-   {
     "n": "Jonathan Kuminga",
     "t": "MIN",
     "st": "pra",
@@ -699,10 +651,73 @@
     "edge": 11.39,
     "proj": 16.01,
     "h": "20.4 (5)"
+   },
+   {
+    "n": "Quentin Grimes",
+    "t": "LAL",
+    "st": "pr",
+    "side": "OVER",
+    "line": 14.5,
+    "mult": 1.962,
+    "p": 0.7056,
+    "edge": 19.6,
+    "proj": 24.35,
+    "h": "9.8 (5)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Ja'Kobe Walter",
+    "t": "TOR",
+    "st": "ast",
+    "side": "OVER",
+    "line": 2.5,
+    "mult": 2.02,
+    "p": 0.6897,
+    "edge": 19.46,
+    "proj": 2.94,
+    "h": "1.8 (8)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "John Collins",
+    "t": "DET",
+    "st": "pts",
+    "side": "OVER",
+    "line": 12.5,
+    "mult": 2.01,
+    "p": 0.6574,
+    "edge": 15.99,
+    "proj": 17.15,
+    "h": "16.5 (2)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Ayo Dosunmu",
+    "t": "MIN",
+    "st": "ra",
+    "side": "UNDER",
+    "line": 8.5,
+    "mult": 1.98,
+    "p": 0.6273,
+    "edge": 12.22,
+    "proj": 6.41,
+    "h": "7.3 (4)",
+    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
   "first_tip": "2026-11-28T00:00:00.000+00:00",
-  "lock_at": "2026-11-27T05:00:00+00:00"
+  "lock_at": "2026-11-27T05:00:00+00:00",
+  "repicks": [
+   {
+    "at": "2026-11-27T00:55-06:00",
+    "dropped": [
+     "Ja'Kobe Walter",
+     "John Collins",
+     "Landry Shamet",
+     "Nickeil Alexander-Walker"
+    ]
+   }
+  ]
  }
 }
