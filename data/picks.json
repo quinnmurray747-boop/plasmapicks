@@ -629,18 +629,6 @@
     "h": "N/A"
    },
    {
-    "n": "Jonathan Kuminga",
-    "t": "MIN",
-    "st": "pra",
-    "side": "UNDER",
-    "line": 22.5,
-    "mult": 1.952,
-    "p": 0.6268,
-    "edge": 11.45,
-    "proj": 19.85,
-    "h": "22.1 (6)"
-   },
-   {
     "n": "Michael Porter Jr.",
     "t": "BKN",
     "st": "pts",
@@ -692,16 +680,29 @@
     "repick": "Replaced after injury news"
    },
    {
-    "n": "Ayo Dosunmu",
-    "t": "MIN",
-    "st": "ra",
+    "n": "P.J. Washington",
+    "t": "DAL",
+    "st": "pra",
     "side": "UNDER",
+    "line": 19.5,
+    "mult": 1.917,
+    "p": 0.6304,
+    "edge": 10.88,
+    "proj": 15.7,
+    "h": "12.1 (4)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Joel Embiid",
+    "t": "PHI",
+    "st": "reb",
+    "side": "OVER",
     "line": 8.5,
     "mult": 1.98,
-    "p": 0.6273,
-    "edge": 12.22,
-    "proj": 6.41,
-    "h": "7.3 (4)",
+    "p": 0.6094,
+    "edge": 10.44,
+    "proj": 9.19,
+    "h": "7.8 (5)",
     "repick": "Replaced after injury news"
    }
   ],
@@ -716,6 +717,13 @@
      "John Collins",
      "Landry Shamet",
      "Nickeil Alexander-Walker"
+    ]
+   },
+   {
+    "at": "2026-11-27T13:43-06:00",
+    "dropped": [
+     "Ayo Dosunmu",
+     "Jonathan Kuminga"
     ]
    }
   ]
