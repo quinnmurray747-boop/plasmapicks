@@ -581,6 +581,149 @@
   "label": "Friday, Nov. 27",
   "picks": [
    {
+    "n": "Quentin Grimes",
+    "t": "LAL",
+    "st": "pra",
+    "side": "OVER",
+    "line": 16.5,
+    "mult": 1.962,
+    "p": 0.7116,
+    "edge": 20.2,
+    "proj": 28.73,
+    "h": "12.6 (5)"
+   },
+   {
+    "n": "Yaxel Lendeborg",
+    "t": "GSW",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 19.5,
+    "mult": 1.826,
+    "p": 0.6993,
+    "edge": 15.16,
+    "proj": 13.77,
+    "h": "N/A"
+   },
+   {
+    "n": "Rui Hachimura",
+    "t": "LAC",
+    "st": "pr",
+    "side": "OVER",
+    "line": 20.5,
+    "mult": 1.952,
+    "p": 0.6508,
+    "edge": 13.85,
+    "proj": 25.79,
+    "h": "13.8 (4)"
+   },
+   {
+    "n": "Bam Adebayo",
+    "t": "MIA",
+    "st": "ra",
+    "side": "UNDER",
+    "line": 10.5,
+    "mult": 2.07,
+    "p": 0.6184,
+    "edge": 13.54,
+    "proj": 9.65,
+    "h": "10.8 (5)"
+   },
+   {
+    "n": "Darryn Peterson",
+    "t": "UTA",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 16.5,
+    "mult": 1.943,
+    "p": 0.6282,
+    "edge": 11.35,
+    "proj": 14.54,
+    "h": "N/A"
+   },
+   {
+    "n": "John Collins",
+    "t": "DET",
+    "st": "pts",
+    "side": "OVER",
+    "line": 11.5,
+    "mult": 1.8,
+    "p": 0.667,
+    "edge": 11.14,
+    "proj": 17.15,
+    "h": "16.5 (2)"
+   },
+   {
+    "n": "Joel Embiid",
+    "t": "PHI",
+    "st": "reb",
+    "side": "OVER",
+    "line": 8.5,
+    "mult": 1.99,
+    "p": 0.6089,
+    "edge": 10.64,
+    "proj": 9.2,
+    "h": "7.8 (5)"
+   },
+   {
+    "n": "P.J. Washington",
+    "t": "DAL",
+    "st": "pra",
+    "side": "UNDER",
+    "line": 19.5,
+    "mult": 1.893,
+    "p": 0.634,
+    "edge": 10.57,
+    "proj": 15.7,
+    "h": "12.1 (4)"
+   },
+   {
+    "n": "Dyson Daniels",
+    "t": "ATL",
+    "st": "reb",
+    "side": "OVER",
+    "line": 7.5,
+    "mult": 1.926,
+    "p": 0.6232,
+    "edge": 10.39,
+    "proj": 10.25,
+    "h": "4.3 (6)"
+   },
+   {
+    "n": "Aaron Nesmith",
+    "t": "IND",
+    "st": "ra",
+    "side": "OVER",
+    "line": 5.5,
+    "mult": 1.935,
+    "p": 0.6204,
+    "edge": 10.36,
+    "proj": 8.01,
+    "h": "6.3 (6)"
+   }
+  ],
+  "locked": true,
+  "first_tip": "2026-11-28T00:00:00.000+00:00",
+  "lock_at": "2026-11-27T05:00:00+00:00",
+  "repicks": [
+   {
+    "at": "2026-11-27T00:55-06:00",
+    "dropped": [
+     "Ja'Kobe Walter",
+     "John Collins",
+     "Landry Shamet",
+     "Nickeil Alexander-Walker"
+    ]
+   },
+   {
+    "at": "2026-11-27T13:43-06:00",
+    "dropped": [
+     "Ayo Dosunmu",
+     "Jonathan Kuminga"
+    ]
+   }
+  ],
+  "overnight": [
+   {
     "n": "Yaxel Lendeborg",
     "t": "GSW",
     "st": "pra",
@@ -706,26 +849,7 @@
     "repick": "Replaced after injury news"
    }
   ],
-  "locked": true,
-  "first_tip": "2026-11-28T00:00:00.000+00:00",
-  "lock_at": "2026-11-27T05:00:00+00:00",
-  "repicks": [
-   {
-    "at": "2026-11-27T00:55-06:00",
-    "dropped": [
-     "Ja'Kobe Walter",
-     "John Collins",
-     "Landry Shamet",
-     "Nickeil Alexander-Walker"
-    ]
-   },
-   {
-    "at": "2026-11-27T13:43-06:00",
-    "dropped": [
-     "Ayo Dosunmu",
-     "Jonathan Kuminga"
-    ]
-   }
-  ]
+  "final": true,
+  "final_at": "2026-11-27T16:07-06:00"
  }
 }
