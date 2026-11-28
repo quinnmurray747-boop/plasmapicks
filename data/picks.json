@@ -946,32 +946,6 @@
     "repick": "Replaced after injury news"
    },
    {
-    "n": "Alperen Şengün",
-    "t": "HOU",
-    "st": "pts",
-    "side": "UNDER",
-    "line": 20.5,
-    "mult": 1.901,
-    "p": 0.6092,
-    "edge": 8.31,
-    "proj": 17.5,
-    "h": "14.0 (4)",
-    "repick": "Replaced after injury news"
-   },
-   {
-    "n": "Jabari Smith Jr.",
-    "t": "HOU",
-    "st": "pts",
-    "side": "OVER",
-    "line": 13.5,
-    "mult": 1.98,
-    "p": 0.5813,
-    "edge": 7.63,
-    "proj": 16.37,
-    "h": "17.5 (4)",
-    "repick": "Replaced after injury news"
-   },
-   {
     "n": "Josh Giddey",
     "t": "CHI",
     "st": "pra",
@@ -1009,6 +983,32 @@
     "proj": 22.97,
     "h": "24.8 (6)",
     "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Jabari Smith Jr.",
+    "t": "HOU",
+    "st": "pts",
+    "side": "OVER",
+    "line": 13.5,
+    "mult": 2.01,
+    "p": 0.5859,
+    "edge": 8.84,
+    "proj": 16.63,
+    "h": "17.5 (4)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Shai Gilgeous-Alexander",
+    "t": "OKC",
+    "st": "pts",
+    "side": "OVER",
+    "line": 32.5,
+    "mult": 1.962,
+    "p": 0.5959,
+    "edge": 8.62,
+    "proj": 39.33,
+    "h": "31.5 (4)",
+    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
@@ -1021,6 +1021,13 @@
      "Jalen Smith",
      "Josh Giddey",
      "Matas Buzelis"
+    ]
+   },
+   {
+    "at": "2026-11-28T12:09-06:00",
+    "dropped": [
+     "Alperen Şengün",
+     "Jabari Smith Jr."
     ]
    }
   ]
