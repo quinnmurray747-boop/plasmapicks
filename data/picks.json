@@ -908,18 +908,6 @@
     "h": "14.8 (5)"
    },
    {
-    "n": "Josh Giddey",
-    "t": "CHI",
-    "st": "pra",
-    "side": "OVER",
-    "line": 30.5,
-    "mult": 1.952,
-    "p": 0.595,
-    "edge": 8.27,
-    "proj": 34.72,
-    "h": "27.9 (7)"
-   },
-   {
     "n": "Anthony Davis",
     "t": "WAS",
     "st": "pa",
@@ -932,32 +920,109 @@
     "h": "27.3 (4)"
    },
    {
-    "n": "Jalen Smith",
-    "t": "CHI",
-    "st": "pa",
-    "side": "OVER",
-    "line": 17.5,
-    "mult": 1.943,
-    "p": 0.5324,
-    "edge": 1.77,
-    "proj": 19.31,
-    "h": "13.5 (4)"
-   },
-   {
-    "n": "Matas Buzelis",
-    "t": "CHI",
+    "n": "Brandon Miller",
+    "t": "CHA",
     "st": "pts",
     "side": "OVER",
-    "line": 18.5,
-    "mult": 1.885,
-    "p": 0.5305,
-    "edge": 0,
-    "proj": 20,
-    "h": "12.5 (8)"
+    "line": 21.5,
+    "mult": 1.952,
+    "p": 0.6289,
+    "edge": 11.66,
+    "proj": 27.9,
+    "h": "21.4 (5)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Moussa Diabaté",
+    "t": "CHA",
+    "st": "pra",
+    "side": "OVER",
+    "line": 23.5,
+    "mult": 1.826,
+    "p": 0.6438,
+    "edge": 9.62,
+    "proj": 27.81,
+    "h": "22.0 (9)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Alperen Şengün",
+    "t": "HOU",
+    "st": "pts",
+    "side": "UNDER",
+    "line": 20.5,
+    "mult": 1.901,
+    "p": 0.6092,
+    "edge": 8.31,
+    "proj": 17.5,
+    "h": "14.0 (4)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Jabari Smith Jr.",
+    "t": "HOU",
+    "st": "pts",
+    "side": "OVER",
+    "line": 13.5,
+    "mult": 1.98,
+    "p": 0.5813,
+    "edge": 7.63,
+    "proj": 16.37,
+    "h": "17.5 (4)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Josh Giddey",
+    "t": "CHI",
+    "st": "pra",
+    "side": "OVER",
+    "line": 29.5,
+    "mult": 1.862,
+    "p": 0.595,
+    "edge": 5.79,
+    "proj": 34.72,
+    "h": "27.9 (7)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Amen Thompson",
+    "t": "HOU",
+    "st": "pts",
+    "side": "OVER",
+    "line": 14.5,
+    "mult": 1.813,
+    "p": 0.6056,
+    "edge": 5.4,
+    "proj": 17.72,
+    "h": "18.3 (3)",
+    "repick": "Replaced after injury news"
+   },
+   {
+    "n": "Julius Randle",
+    "t": "BKN",
+    "st": "pts",
+    "side": "OVER",
+    "line": 19.5,
+    "mult": 1.833,
+    "p": 0.5935,
+    "edge": 4.8,
+    "proj": 22.97,
+    "h": "24.8 (6)",
+    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
   "first_tip": "2026-11-28T22:00:00.000+00:00",
-  "lock_at": "2026-11-28T05:00:00+00:00"
+  "lock_at": "2026-11-28T05:00:00+00:00",
+  "repicks": [
+   {
+    "at": "2026-11-28T00:36-06:00",
+    "dropped": [
+     "Jalen Smith",
+     "Josh Giddey",
+     "Matas Buzelis"
+    ]
+   }
+  ]
  }
 }
