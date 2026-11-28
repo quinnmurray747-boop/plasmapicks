@@ -665,18 +665,6 @@
     "h": "7.8 (5)"
    },
    {
-    "n": "P.J. Washington",
-    "t": "DAL",
-    "st": "pra",
-    "side": "UNDER",
-    "line": 19.5,
-    "mult": 1.893,
-    "p": 0.634,
-    "edge": 10.57,
-    "proj": 15.7,
-    "h": "12.1 (4)"
-   },
-   {
     "n": "Dyson Daniels",
     "t": "ATL",
     "st": "reb",
@@ -699,6 +687,19 @@
     "edge": 10.36,
     "proj": 8.01,
     "h": "6.3 (6)"
+   },
+   {
+    "n": "Draymond Green",
+    "t": "GSW",
+    "st": "pa",
+    "side": "UNDER",
+    "line": 10.5,
+    "mult": 1.99,
+    "p": 0.6051,
+    "edge": 10.25,
+    "proj": 8.38,
+    "h": "13.8 (7)",
+    "repick": "Replaced after injury news"
    }
   ],
   "locked": true,
@@ -719,6 +720,12 @@
     "dropped": [
      "Ayo Dosunmu",
      "Jonathan Kuminga"
+    ]
+   },
+   {
+    "at": "2026-11-27T18:45-06:00",
+    "dropped": [
+     "P.J. Washington"
     ]
    }
   ],
