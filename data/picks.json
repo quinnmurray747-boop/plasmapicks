@@ -590,7 +590,9 @@
     "p": 0.7116,
     "edge": 20.2,
     "proj": 28.73,
-    "h": "12.6 (5)"
+    "h": "12.6 (5)",
+    "result": "L",
+    "actual": 10
    },
    {
     "n": "Yaxel Lendeborg",
@@ -602,7 +604,9 @@
     "p": 0.6993,
     "edge": 15.16,
     "proj": 13.77,
-    "h": "N/A"
+    "h": "N/A",
+    "result": "W",
+    "actual": 18
    },
    {
     "n": "Rui Hachimura",
@@ -614,7 +618,9 @@
     "p": 0.6508,
     "edge": 13.85,
     "proj": 25.79,
-    "h": "13.8 (4)"
+    "h": "13.8 (4)",
+    "result": "W",
+    "actual": 21
    },
    {
     "n": "Bam Adebayo",
@@ -711,7 +717,9 @@
     "edge": 10.25,
     "proj": 8.38,
     "h": "13.8 (7)",
-    "repick": "Replaced after injury news"
+    "repick": "Replaced after injury news",
+    "result": "W",
+    "actual": 5
    }
   ],
   "locked": true,
@@ -869,7 +877,8 @@
    }
   ],
   "final": true,
-  "final_at": "2026-11-27T16:07-06:00"
+  "final_at": "2026-11-27T16:07-06:00",
+  "graded": true
  },
  "2026-11-28": {
   "label": "Saturday, Nov. 28",
