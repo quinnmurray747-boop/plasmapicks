@@ -870,5 +870,85 @@
   ],
   "final": true,
   "final_at": "2026-11-27T16:07-06:00"
+ },
+ "2026-11-28": {
+  "label": "Saturday, Nov. 28",
+  "picks": [
+   {
+    "n": "Tristan Da Silva",
+    "t": "ORL",
+    "st": "pts",
+    "side": "OVER",
+    "line": 11.5,
+    "mult": 1.901,
+    "p": 0.6317,
+    "edge": 10.56,
+    "proj": 15.64,
+    "h": "11.1 (9)"
+   },
+   {
+    "n": "Jalen Suggs",
+    "t": "ORL",
+    "st": "pr",
+    "side": "UNDER",
+    "line": 15.5,
+    "mult": 1.971,
+    "p": 0.6081,
+    "edge": 10.07,
+    "proj": 14.14,
+    "h": "14.8 (5)"
+   },
+   {
+    "n": "Josh Giddey",
+    "t": "CHI",
+    "st": "pra",
+    "side": "OVER",
+    "line": 30.5,
+    "mult": 1.952,
+    "p": 0.5899,
+    "edge": 7.76,
+    "proj": 34.72,
+    "h": "27.9 (7)"
+   },
+   {
+    "n": "Anthony Davis",
+    "t": "WAS",
+    "st": "pa",
+    "side": "OVER",
+    "line": 25.5,
+    "mult": 1.952,
+    "p": 0.5852,
+    "edge": 7.29,
+    "proj": 30.25,
+    "h": "27.3 (4)"
+   },
+   {
+    "n": "Jalen Smith",
+    "t": "CHI",
+    "st": "pa",
+    "side": "OVER",
+    "line": 17.5,
+    "mult": 1.943,
+    "p": 0.5324,
+    "edge": 1.77,
+    "proj": 19.31,
+    "h": "13.5 (4)"
+   },
+   {
+    "n": "Matas Buzelis",
+    "t": "CHI",
+    "st": "pts",
+    "side": "OVER",
+    "line": 18.5,
+    "mult": 1.885,
+    "p": 0.5305,
+    "edge": 0,
+    "proj": 20,
+    "h": "12.5 (8)"
+   }
+  ],
+  "locked": false,
+  "first_tip": "2026-11-28T22:00:00.000+00:00",
+  "lock_at": "2026-11-28T05:00:00+00:00"
  }
 }
