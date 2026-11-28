@@ -640,7 +640,9 @@
     "p": 0.6282,
     "edge": 11.35,
     "proj": 14.54,
-    "h": "N/A"
+    "h": "N/A",
+    "result": "L",
+    "actual": 20
    },
    {
     "n": "John Collins",
